@@ -24,3 +24,9 @@ test("displays the price", () => {
   const price = findByAttribute(wrapper, "price");
   expect(price.text()).toContain("1299");
 });
+
+test("displays an image", () => {
+  const wrapper = shallow(<Item image="https://i.imgur.com/fmUsxCO.jpg" />);
+  const image = findByAttribute(wrapper, "image");
+  expect(image.text()).toContain("https://i.imgur.com/fmUsxCO.jpg");
+});
