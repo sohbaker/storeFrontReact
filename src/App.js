@@ -1,4 +1,5 @@
 import React from "react";
+import Item from "./components/Item";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -25,6 +26,10 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <div>Hello world</div>;
+    return (
+      <div>
+        <Item name="hi" price="200" image="https://i.imgur.com/fmUsxCO.jpg" />
+      </div>
+    );
   }
 }

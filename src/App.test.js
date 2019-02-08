@@ -9,10 +9,10 @@ test("renders without crashing", () => {
   shallow(<App />);
 });
 
-test("makes an API call", async () => {
-  const wrapper = shallow(<App />);
-  const data = await wrapper.state().data;
-  console.log(data);
-  wrapper.debug();
-  expect(data).toEqual(true);
-});
+// test("makes an API call", async () => {
+//   const wrapper = shallow(<App />);
+//   const data = await wrapper.state().data;
+//   console.log(data);
+//   wrapper.debug();
+//   expect(data).toEqual(true);
+// });
