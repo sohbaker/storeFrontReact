@@ -28,5 +28,11 @@ test("displays the price", () => {
 test("displays an image", () => {
   const wrapper = shallow(<Item image="https://i.imgur.com/fmUsxCO.jpg" />);
   const image = findByAttribute(wrapper, "image");
-  expect(image.text()).toContain("https://i.imgur.com/fmUsxCO.jpg");
+  expect(image.prop("src")).toContain("https://i.imgur.com/fmUsxCO.jpg");
+});
+
+test("alt text for image reads as the name of the product shown", () => {
+  const wrapper = shallow(<Item name="lady in red" />);
+  const image = findByAttribute(wrapper, "image");
+  expect(image.prop("alt")).toEqual("image of lady in red");
 });

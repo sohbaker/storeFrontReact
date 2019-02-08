@@ -4,7 +4,7 @@ const Item = props => {
   return (
     <div>
       <div>
-        <img test="image">{props.image}</img>
+        <img test="image" src={props.image} alt={"image of " + props.name} />
       </div>
       <div>
         <p test="name">{props.name}</p>
