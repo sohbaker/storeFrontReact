@@ -6,6 +6,7 @@ const Item = props => {
       <div>Image</div>
       <div>
         <p test="name">{props.name}</p>
+        <p test="price">{props.price}</p>
       </div>
     </div>
   );

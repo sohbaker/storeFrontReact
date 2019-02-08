@@ -18,3 +18,9 @@ test("displays the name", () => {
   const name = findByAttribute(wrapper, "name");
   expect(name.text()).toContain("blue suede shoes");
 });
+
+test("displays the price", () => {
+  const wrapper = shallow(<Item price="1299" />);
+  const price = findByAttribute(wrapper, "price");
+  expect(price.text()).toContain("1299");
+});
