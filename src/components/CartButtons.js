@@ -1,6 +1,6 @@
 import React from "react";
 
-const Button = props => {
+const CartButtons = props => {
   return (
     <div>
       <button className="positive ui button" test="positive">
@@ -13,4 +13,4 @@ const Button = props => {
   );
 };
 
-export default Button;
+export default CartButtons;

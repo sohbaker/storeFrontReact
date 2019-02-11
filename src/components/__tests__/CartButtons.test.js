@@ -1,7 +1,7 @@
 import React from "react";
 import Enzyme, { shallow } from "enzyme";
 import EnzymeAdapter from "enzyme-adapter-react-16";
-import Buttons from "../Buttons";
+import CartButtons from "../CartButtons";
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
@@ -10,17 +10,17 @@ const findByAttribute = (wrapper, val) => {
 };
 
 test("renders without crashing", () => {
-  shallow(<Buttons />);
+  shallow(<CartButtons />);
 });
 
 test("renders add button", () => {
-  const wrapper = shallow(<Buttons positive="Add" />);
+  const wrapper = shallow(<CartButtons positive="Add" />);
   const positive = findByAttribute(wrapper, "positive");
   expect(positive.text()).toContain("Add");
 });
 
 test("renders remove button", () => {
-  const wrapper = shallow(<Buttons negative="Remove" />);
+  const wrapper = shallow(<CartButtons negative="Remove" />);
   const negative = findByAttribute(wrapper, "negative");
   expect(negative.text()).toContain("Remove");
 });
