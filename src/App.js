@@ -28,7 +28,13 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Item name="hi" price="200" image="https://i.imgur.com/fmUsxCO.jpg" />
+        <Item
+          name="hi"
+          price="200"
+          image="https://i.imgur.com/fmUsxCO.jpg"
+          category="Shoes"
+          quantity="2"
+        />
       </div>
     );
   }

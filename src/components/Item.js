@@ -16,6 +16,9 @@ const Item = props => {
         <p test="price" className="description">
           {props.price}
         </p>
+        <p test="quantity" className="extra-content">
+          {props.quantity + " remaining"}
+        </p>
       </div>
     </div>
   );
