@@ -1,4 +1,5 @@
 import React from "react";
+import ItemButton from "./ItemButton";
 
 const Item = props => {
   return (
@@ -19,6 +20,7 @@ const Item = props => {
         <p test="quantity" className="extra-content">
           {props.quantity + " remaining"}
         </p>
+        <ItemButton />
       </div>
     </div>
   );
