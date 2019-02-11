@@ -33,6 +33,12 @@ test("deducts 1 from item quantity when add to cart button is clicked", () => {
   expect(instance.state.data[1].shop_quantity).toEqual(redShoeQuantity - 1);
 });
 
+test("when rendered it creates a cart_quantity key for existing items in shop data", () => {
+  const cartQuantity = instance.state.data[1].cart_quantity;
+  wrapper.debug();
+  expect(cartQuantity).toEqual(0);
+});
+
 // test("makes an API call", async () => {
 //   const wrapper = shallow(<App />);
 //   const data = await wrapper.state().data;
