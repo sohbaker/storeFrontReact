@@ -10,7 +10,13 @@ test("renders without crashing", () => {
 });
 
 test("renders add to cart button", () => {
-  const wrapper = shallow(<ItemButton name="Add to cart" />);
+  const wrapper = shallow(<ItemButton />);
   const name = wrapper.find("[test='Add to cart']");
   expect(name.prop("test")).toContain("Add to cart");
+});
+
+test("renders cart icon on button", () => {
+  const wrapper = shallow(<ItemButton />);
+  const iconImage = wrapper.find("[test='icon-image']");
+  expect(iconImage.hasClass("shop icon")).toBeTruthy();
 });
