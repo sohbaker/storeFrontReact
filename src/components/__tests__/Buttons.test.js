@@ -18,3 +18,9 @@ test("renders add button", () => {
   const positive = findByAttribute(wrapper, "positive");
   expect(positive.text()).toContain("Add");
 });
+
+test("renders remove button", () => {
+  const wrapper = shallow(<Buttons negative="Remove" />);
+  const negative = findByAttribute(wrapper, "negative");
+  expect(negative.text()).toContain("Remove");
+});
