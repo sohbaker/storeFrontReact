@@ -27,14 +27,29 @@ export default class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.addCartQuantityKey();
+  }
+
+  addCartQuantityKey = () => {
+    let shopItems = [...this.state.data];
+    shopItems.forEach(item => {
+      item["cart_quantity"] = 0;
+    });
+    this.setState({ data: shopItems });
+    console.log(this.state.data);
+  };
+
   handleClick = id => {
     let items = [...this.state.data];
     let item = { ...items[id] };
-    if (item.shop_quantity > 0) {
-      item.shop_quantity -= 1;
-      items[id] = item;
-      this.setState({ data: items });
-    }
+    // if (item.shop_quantity > 0) {
+    item.shop_quantity -= 1;
+    item.cart_quantity += 1;
+    items[id] = item;
+    this.setState({ data: items });
+    console.log(this.state.data);
+    // }
   };
   // async componentDidMount() {
   //   try {
