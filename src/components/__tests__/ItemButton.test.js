@@ -20,3 +20,10 @@ test("renders cart icon on button", () => {
   const iconImage = wrapper.find("[test='icon-image']");
   expect(iconImage.hasClass("shop icon")).toBeTruthy();
 });
+
+test("disables button if item quantity is 0", () => {
+  const quantity = 0;
+  const wrapper = shallow(<ItemButton quantity={quantity} />);
+  const name = wrapper.find("[test='Add to cart']");
+  expect(name.hasClass("ui disabled button")).toBeTruthy();
+});

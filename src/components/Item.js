@@ -2,7 +2,7 @@ import React from "react";
 import ItemButton from "./ItemButton";
 
 function showButton(props) {
-  return <ItemButton onClick={props.onClick} />;
+  return <ItemButton onClick={props.onClick} quantity={props.quantity} />;
 }
 
 const Item = props => {
