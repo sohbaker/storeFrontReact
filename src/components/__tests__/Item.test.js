@@ -36,3 +36,15 @@ test("alt text for image reads as the name of the product shown", () => {
   const image = findByAttribute(wrapper, "image");
   expect(image.prop("alt")).toEqual("image of lady in red");
 });
+
+test("displays the item category", () => {
+  const wrapper = shallow(<Item category="Women's Footwear" />);
+  const category = findByAttribute(wrapper, "category");
+  expect(category.text()).toContain("Women's Footwear");
+});
+
+test("displays the item quantity", () => {
+  const wrapper = shallow(<Item quantity="2" />);
+  const quantity = findByAttribute(wrapper, "quantity");
+  expect(quantity.text()).toContain("2");
+});
