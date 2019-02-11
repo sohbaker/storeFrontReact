@@ -30,11 +30,12 @@ export default class App extends React.Component {
   handleClick = id => {
     let items = [...this.state.data];
     let item = { ...items[id] };
-    item.shop_quantity -= 1;
-    items[id] = item;
-    this.setState({ data: items });
+    if (item.shop_quantity > 0) {
+      item.shop_quantity -= 1;
+      items[id] = item;
+      this.setState({ data: items });
+    }
   };
-
   // async componentDidMount() {
   //   try {
   //     const response = await fetch("https://api.myjson.com/bins/9d960");
