@@ -26,9 +26,12 @@ test("renders Item components based on data within this.state", () => {
   expect(wrapper.find("Item").length).toBe(numberOfProducts);
 });
 
-// test("deducts 1 from item quantity when add to cart button is clicked", () => {
-//   shallow(<App />);
-// });
+test("deducts 1 from item quantity when add to cart button is clicked", () => {
+  const redShoe = instance.state.data[1];
+  const redShoeQuantity = redShoe.shop_quantity;
+  instance.handleClick(redShoe.id);
+  expect(instance.state.data[1].shop_quantity).toEqual(redShoeQuantity - 1);
+});
 
 // test("makes an API call", async () => {
 //   const wrapper = shallow(<App />);

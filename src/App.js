@@ -28,11 +28,11 @@ export default class App extends React.Component {
   }
 
   handleClick = id => {
-    const { quantity } = this.state;
-    if (quantity > 0) {
-      quantity--;
-      this.setState({ quantity: quantity });
-    }
+    let items = [...this.state.data];
+    let item = { ...items[id] };
+    item.shop_quantity -= 1;
+    items[id] = item;
+    this.setState({ data: items });
   };
 
   // async componentDidMount() {
@@ -62,6 +62,7 @@ export default class App extends React.Component {
           image={data.image}
           category={data.category}
           quantity={data.shop_quantity}
+          onClick={id => this.handleClick(data.id)}
         />
       );
     });
