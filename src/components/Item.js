@@ -10,7 +10,10 @@ const Item = props => {
         <p test="name" className="header">
           {props.name}
         </p>
-        <p test="price" className="date">
+        <p test="category" className="date">
+          {props.category}
+        </p>
+        <p test="price" className="description">
           {props.price}
         </p>
       </div>
