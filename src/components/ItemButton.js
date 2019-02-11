@@ -1,10 +1,17 @@
 import React from "react";
 
+function disableButton(props) {
+  if (props.quantity === 0) {
+    return "ui disabled button";
+  }
+  return "ui icon button";
+}
+
 const ItemButton = props => {
   return (
     <div>
       <button
-        className="ui icon button"
+        className={disableButton(props)}
         onClick={props.onClick}
         test="Add to cart"
       >
