@@ -36,7 +36,6 @@ export default class App extends React.Component {
       this.setState({ data: items });
     }
   };
-
   // async componentDidMount() {
   //   try {
   //     const response = await fetch("https://api.myjson.com/bins/9d960");
