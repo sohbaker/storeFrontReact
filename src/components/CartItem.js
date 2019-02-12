@@ -11,6 +11,9 @@ const CartItem = props => {
           <p className="header" test="name">
             {props.name}
           </p>
+          <div class="description">
+            <p test="price">{props.price}</p>
+          </div>
         </div>
       </div>
     </div>

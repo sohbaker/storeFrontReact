@@ -24,3 +24,9 @@ test("renders the item image", () => {
   const image = findByAttribute(wrapper, "image");
   expect(image.prop("src")).toContain("https://i.imgur.com/fmUsxCO.jpg");
 });
+
+test("renders the item price", () => {
+  const wrapper = shallow(<CartItem price="200" />);
+  const price = findByAttribute(wrapper, "price");
+  expect(price.text()).toContain("200");
+});
