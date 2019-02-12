@@ -1,5 +1,9 @@
 import React from "react";
 
+function itemTotal(price, quantity) {
+  return parseInt(price) * parseInt(quantity);
+}
+
 const CartItem = props => {
   return (
     <div className="ui items">
@@ -14,6 +18,9 @@ const CartItem = props => {
           <div class="description">
             <p test="price">{props.price}</p>
             <p test="quantity">{props.quantity}</p>
+          </div>
+          <div class="extra" test="total">
+            {itemTotal(props.price, props.quantity)}
           </div>
         </div>
       </div>
