@@ -5,7 +5,19 @@ import Cart from "../Cart";
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
+let wrapper;
+let instance;
+
+beforeEach(() => {
+  wrapper = shallow(<Cart />);
+  instance = wrapper.instance();
+});
+
 test("renders without crashing", () => {
+  shallow(<Cart />);
+});
+
+test("is empty if cart is empty", () => {
   shallow(<Cart />);
 });
 
