@@ -13,6 +13,7 @@ const CartItem = props => {
           </p>
           <div class="description">
             <p test="price">{props.price}</p>
+            <p test="quantity">{props.quantity}</p>
           </div>
         </div>
       </div>
