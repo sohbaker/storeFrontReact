@@ -58,3 +58,15 @@ test("negative button remains active when shop quantity is 0", () => {
   const button = wrapper.find("[test='negative']");
   expect(button.hasClass("disabled")).toBeFalsy();
 });
+
+test("CartButtons accepts onIncrement prop", () => {
+  const wrapper = shallow(<CartButtons onIncrement="Hello" />);
+  const button = wrapper.find("[test='positive']");
+  expect(button.prop("onClick")).toContain("Hello");
+});
+
+test("CartButtons accepts onDecrement prop", () => {
+  const wrapper = shallow(<CartButtons onDecrement="Goodbye" />);
+  const button = wrapper.find("[test='negative']");
+  expect(button.prop("onClick")).toContain("Goodbye");
+});
