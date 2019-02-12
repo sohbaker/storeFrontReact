@@ -37,19 +37,17 @@ export default class App extends React.Component {
       item["cart_quantity"] = 0;
     });
     this.setState({ data: shopItems });
-    console.log(this.state.data);
   };
 
   handleClick = id => {
     let items = [...this.state.data];
     let item = { ...items[id] };
-    // if (item.shop_quantity > 0) {
-    item.shop_quantity -= 1;
-    item.cart_quantity += 1;
-    items[id] = item;
-    this.setState({ data: items });
-    console.log(this.state.data);
-    // }
+    if (item.shop_quantity > 0) {
+      item.shop_quantity -= 1;
+      item.cart_quantity += 1;
+      items[id] = item;
+      this.setState({ data: items });
+    }
   };
   // async componentDidMount() {
   //   try {
@@ -82,6 +80,8 @@ export default class App extends React.Component {
         />
       );
     });
+    console.log("rendered");
+    console.log(this.state.data);
     return <div>{showProducts}</div>;
   }
 }
