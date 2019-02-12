@@ -5,14 +5,16 @@ import CartItem from "../CartItem";
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
-let wrapper;
-let instance;
-
-beforeEach(() => {
-  wrapper = shallow(<CartItem />);
-  instance = wrapper.instance();
-});
+const findByAttribute = (wrapper, val) => {
+  return wrapper.find(`[test='${val}']`);
+};
 
 test("renders without crashing", () => {
   shallow(<CartItem />);
+});
+
+test("renders the item name", () => {
+  const wrapper = shallow(<CartItem name="Blue Prom Dress" />);
+  const name = findByAttribute(wrapper, "name");
+  expect(name.text()).toContain("Blue Prom Dress");
 });
