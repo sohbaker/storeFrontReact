@@ -6,19 +6,33 @@ import Cart from "../Cart";
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 let wrapper;
-let instance;
+// let instance;
 
 beforeEach(() => {
   wrapper = shallow(<Cart />);
-  instance = wrapper.instance();
+  // instance = wrapper.instance();
 });
 
-test("renders without crashing", () => {
-  shallow(<Cart />);
-});
+const findByAttribute = (wrapper, val) => {
+  return wrapper.find(`[test='${val}']`);
+};
 
-test("is empty if cart is empty", () => {
-  shallow(<Cart />);
+// test("renders without crashing", () => {
+//   shallow(<Cart />);
+// });
+
+test("it accepts the prop data", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 0,
+    name: "Court Shoes, Nude Pink",
+    category: "Women's Footwear",
+    image: "https://i.imgur.com/fmUsxCO.jpg",
+    price: 9900,
+    shop_quantity: 3
+  }]
+  const wrapper = shallow(<Cart data={data}/>)
+  expect(wrapper.find("CartItem").length).toBe(1);
 });
 
 // test("when rendered it updates this.state.cart with items available in this.state.data", () => {
