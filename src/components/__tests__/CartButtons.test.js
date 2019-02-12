@@ -24,3 +24,49 @@ test("renders remove button", () => {
   const negative = findByAttribute(wrapper, "negative");
   expect(negative.text()).toContain("Remove");
 });
+
+test("disables positive button if shop quantity is 0", () => {
+  const quantity = 0;
+  const wrapper = shallow(<CartButtons shop_quantity={quantity} />);
+  const button = wrapper.find("[test='positive']");
+  expect(button.hasClass("disabled")).toBeTruthy();
+});
+
+test("disables negative button if cart quantity is 0", () => {
+  const quantity = 0;
+  const wrapper = shallow(<CartButtons cart_quantity={quantity} />);
+  const button = wrapper.find("[test='negative']");
+  expect(button.hasClass("disabled")).toBeTruthy();
+});
+
+test("positive button remains active when cart quantity is 0", () => {
+  const shopQuantity = 5;
+  const cartQuantity = 0;
+  const wrapper = shallow(
+    <CartButtons shop_quantity={shopQuantity} cart_quantity={cartQuantity} />
+  );
+  const button = wrapper.find("[test='positive']");
+  expect(button.hasClass("disabled")).toBeFalsy();
+});
+
+test("negative button remains active when shop quantity is 0", () => {
+  const shopQuantity = 0;
+  const cartQuantity = 5;
+  const wrapper = shallow(
+    <CartButtons shop_quantity={shopQuantity} cart_quantity={cartQuantity} />
+  );
+  const button = wrapper.find("[test='negative']");
+  expect(button.hasClass("disabled")).toBeFalsy();
+});
+
+test("CartButtons accepts onIncrement prop", () => {
+  const wrapper = shallow(<CartButtons onIncrement="Hello" />);
+  const button = wrapper.find("[test='positive']");
+  expect(button.prop("onClick")).toContain("Hello");
+});
+
+test("CartButtons accepts onDecrement prop", () => {
+  const wrapper = shallow(<CartButtons onDecrement="Goodbye" />);
+  const button = wrapper.find("[test='negative']");
+  expect(button.prop("onClick")).toContain("Goodbye");
+});
