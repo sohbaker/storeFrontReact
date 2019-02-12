@@ -1,10 +1,6 @@
 import React from "react";
 import ItemButton from "./ItemButton";
 
-function showButton(props) {
-  return <ItemButton onClick={props.onClick} quantity={props.quantity} />;
-}
-
 const Item = props => {
   return (
     <div className="ui card">
@@ -24,7 +20,7 @@ const Item = props => {
         <p test="quantity" className="extra-content">
           {props.quantity + " remaining"}
         </p>
-        {showButton(props)}
+        <ItemButton onClick={props.onClick} quantity={props.quantity} />
       </div>
     </div>
   );
