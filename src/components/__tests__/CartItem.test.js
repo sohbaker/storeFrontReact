@@ -18,3 +18,9 @@ test("renders the item name", () => {
   const name = findByAttribute(wrapper, "name");
   expect(name.text()).toContain("Blue Prom Dress");
 });
+
+test("renders the item image", () => {
+  const wrapper = shallow(<CartItem image="https://i.imgur.com/fmUsxCO.jpg" />);
+  const image = findByAttribute(wrapper, "image");
+  expect(image.prop("src")).toContain("https://i.imgur.com/fmUsxCO.jpg");
+});
