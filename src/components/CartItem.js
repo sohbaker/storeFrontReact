@@ -1,4 +1,5 @@
 import React from "react";
+import CartButtons from "./CartButtons";
 
 function itemTotal(price, quantity) {
   return parseInt(price) * parseInt(quantity);
@@ -19,7 +20,14 @@ const CartItem = props => {
             <p test="price">{props.price}</p>
             <p test="quantity">{props.quantity}</p>
           </div>
-          <div>fdfd</div>
+          <div>
+            <CartButtons
+              onIncrement={props.onIncrement}
+              onDecrement={props.onDecrement}
+              positive="+"
+              negative="-"
+            />
+          </div>
           <div class="extra" test="total">
             {itemTotal(props.price, props.quantity)}
           </div>

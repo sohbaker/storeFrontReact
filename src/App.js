@@ -80,8 +80,6 @@ export default class App extends React.Component {
         />
       );
     });
-    console.log("rendered");
-    console.log(this.state.data);
     return <div>{showProducts}</div>;
   }
 }

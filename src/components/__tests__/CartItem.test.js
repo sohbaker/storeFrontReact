@@ -37,8 +37,7 @@ test("renders the quantity of item in cart", () => {
   expect(quantity.text()).toContain("2");
 });
 
-test("renders the total cost for item", () => {
-  const wrapper = shallow(<CartItem price="200" quantity="2" />);
-  const total = findByAttribute(wrapper, "total");
-  expect(total.text()).toContain("400");
+test("renders CartButtons components", () => {
+  const wrapper = shallow(<CartItem />);
+  expect(wrapper.find("CartButtons").length).toBe(1);
 });
