@@ -2,8 +2,8 @@ import React from "react";
 import CartButtons from "./CartButtons";
 
 function itemTotal(price, quantity) {
-  const calculateTotal = parseInt(price) * parseInt(quantity);
-  return toString(calculateTotal);
+  const calculateTotal = price * quantity;
+  return calculateTotal;
 }
 
 const CartItem = props => {
