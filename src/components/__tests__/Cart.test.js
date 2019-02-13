@@ -5,10 +5,6 @@ import Cart from "../Cart";
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
-const findByAttribute = (wrapper, val) => {
-  return wrapper.find(`[test='${val}']`);
-};
-
 test("renders without crashing", () => {
   shallow(<Cart data={[]} />);
 });

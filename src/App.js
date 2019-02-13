@@ -40,7 +40,7 @@ export default class App extends React.Component {
     this.setState({ data: shopItems });
   };
 
-  handleClick = id => {
+  handleAddClick = id => {
     let items = [...this.state.data];
     let item = { ...items[id] };
     if (item.shop_quantity > 0) {
@@ -72,7 +72,7 @@ export default class App extends React.Component {
             key={data.id}
             id={data.id}
             data={this.state.data}
-            onIncrement={id => this.handleClick(data.id)}
+            onIncrement={id => this.handleAddClick(data.id)}
             onDecrement={id => this.handleMinusClick(data.id)}
           />
       }
@@ -92,7 +92,7 @@ export default class App extends React.Component {
           image={data.image}
           category={data.category}
           quantity={data.shop_quantity}
-          onClick={id => this.handleClick(data.id)}
+          onClick={id => this.handleAddClick(data.id)}
         />
       );
     });

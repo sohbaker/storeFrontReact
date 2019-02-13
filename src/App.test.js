@@ -13,10 +13,6 @@ beforeEach(() => {
   instance = wrapper.instance();
 });
 
-const findByTestAttr = (wrapper, val) => {
-  return wrapper.find(`[data-test='${val}']`);
-};
-
 test("renders without crashing", () => {
   shallow(<App />);
 });
@@ -29,7 +25,7 @@ test("renders Item components based on data within this.state", () => {
 test("deducts 1 from item quantity when add to cart button is clicked", () => {
   const redShoe = instance.state.data[1];
   const redShoeQuantity = redShoe.shop_quantity;
-  instance.handleClick(redShoe.id);
+  instance.handleAddClick(redShoe.id);
   expect(instance.state.data[1].shop_quantity).toEqual(redShoeQuantity - 1);
 });
 
@@ -38,11 +34,3 @@ test("when rendered it creates a cart_quantity key for existing items in shop da
   wrapper.debug();
   expect(cartQuantity).toEqual(0);
 });
-
-// test("makes an API call", async () => {
-//   const wrapper = shallow(<App />);
-//   const data = await wrapper.state().data;
-//   console.log(data);
-//   wrapper.debug();
-//   expect(data).toEqual(true);
-// });
