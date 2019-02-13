@@ -18,6 +18,7 @@ export default class Cart extends React.Component {
           image: data.image,
           name: data.name,
           price: data.price,
+          shop_quantity: data.shop_quantity,
           cart_quantity: data.cart_quantity
         })
       } else {
@@ -42,7 +43,8 @@ export default class Cart extends React.Component {
               image={item.image}
               name={item.name}
               price={item.price}
-              quantity={item.cart_quantity}
+              shop_quantity={item.shop_quantity}
+              cart_quantity={item.cart_quantity}
               onIncrement={this.props.onIncrement}
               onDecrement={this.props.onDecrement}
             />

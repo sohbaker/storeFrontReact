@@ -26,15 +26,15 @@ test("renders remove button", () => {
 });
 
 test("disables positive button if shop quantity is 0", () => {
-  const quantity = 0;
-  const wrapper = shallow(<CartButtons shop_quantity={quantity} />);
+  const shop_quantity = 0;
+  const wrapper = shallow(<CartButtons shop_quantity={shop_quantity} />);
   const button = wrapper.find("[test='positive']");
   expect(button.hasClass("disabled")).toBeTruthy();
 });
 
 test("disables negative button if cart quantity is 0", () => {
-  const quantity = 0;
-  const wrapper = shallow(<CartButtons cart_quantity={quantity} />);
+  const cart_quantity = 0;
+  const wrapper = shallow(<CartButtons cart_quantity={cart_quantity} />);
   const button = wrapper.find("[test='negative']");
   expect(button.hasClass("disabled")).toBeTruthy();
 });

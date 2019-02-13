@@ -1,8 +1,8 @@
 import React from "react";
 import CartButtons from "./CartButtons";
 
-function itemTotal(price, quantity) {
-  const calculateTotal = price * quantity;
+function itemTotal(price, cart_quantity) {
+  const calculateTotal = price * cart_quantity;
   return calculateTotal;
 }
 
@@ -19,10 +19,12 @@ const CartItem = props => {
           </p>
           <div className="description">
             <p test="price">{props.price}</p>
-            <p test="quantity">{props.quantity}</p>
+            <p test="quantity">{props.cart_quantity}</p>
           </div>
           <div>
             <CartButtons
+              shop_quantity={props.shop_quantity}
+              cart_quantity={props.cart_quantity}
               onIncrement={props.onIncrement}
               onDecrement={props.onDecrement}
               positive="+"
@@ -30,7 +32,7 @@ const CartItem = props => {
             />
           </div>
           <div className="extra" test="total">
-            {itemTotal(props.price, props.quantity)}
+            {itemTotal(props.price, props.cart_quantity)}
           </div>
         </div>
       </div>
