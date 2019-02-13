@@ -27,3 +27,26 @@ test("it accepts the prop data", () => {
   expect(wrapper.prop('data').length).toBe(1);
   expect(wrapper.find("CartItem").length).toBe(1);
 });
+
+test("only renders items which have a cart quantitiy more than 0", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 0,
+    name: "Court Shoes, Nude Pink",
+    category: "Women's Footwear",
+    image: "https://i.imgur.com/fmUsxCO.jpg",
+    price: 9900,
+    shop_quantity: 3
+  },
+  {
+    cart_quantity: 0,
+    id: 1,
+    name: "Suede Heels, Red",
+    category: "Women's Footwear",
+    image: "https://i.imgur.com/DVnYQl7.jpg",
+    price: 4200,
+    shop_quantity: 4
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  expect(wrapper.find("CartItem").length).toBe(1);
+});
