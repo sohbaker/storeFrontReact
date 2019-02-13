@@ -7,28 +7,49 @@ export default class Cart extends React.Component {
     this.state = { data: this.props.data }
   }
 
-  render() {
+  getData = () => {
+    let dataToShow = [];
     const data = this.state.data;
-    const displayCartItems = data.map(data => {
+    data.forEach(data => {
       if (data.cart_quantity > 0) {
-        return (
-          <div className="cart-items" key={data.id}>
-            <CartItem
-              key={data.id}
-              id={data.id}
-              image={data.image}
-              name={data.name}
-              price={data.price}
-              quantity={data.quantity}
-              onIncrement={data.onIncrement}
-              onDecrement={data.onDecrement}
-            />
-          </div>
-        )
+        dataToShow.push({
+          key: data.id,
+          id: data.id,
+          image: data.image,
+          name: data.name,
+          price: data.price,
+          cart_quantity: data.cart_quantity
+        })
       } else {
         return null;
       }
     })
+    return dataToShow;
+  }
+
+  render() {
+    const data = this.getData();
+    let displayCartItems;
+    if (!data) {
+      displayCartItems = null;
+    } else {
+      displayCartItems = data.map(item => {
+        return (
+          <div className="cart-items" key={item.id}>
+            <CartItem
+              key={item.id}
+              id={item.id}
+              image={item.image}
+              name={item.name}
+              price={item.price}
+              quantity={item.cart_quantity}
+              onIncrement={this.props.onIncrement}
+              onDecrement={this.props.onDecrement}
+            />
+          </div>
+        )
+      })
+    }
     return (<div>{displayCartItems}</div>);
   }
 }

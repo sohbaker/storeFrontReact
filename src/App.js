@@ -53,34 +53,19 @@ export default class App extends React.Component {
 
   showCart = () => {
     const { data } = this.state;
-    const showCart = data.map(data => {
+    let showCart;
+    data.forEach(data => {
       if (data.cart_quantity > 0) {
-        return (
+        showCart =
           <Cart
             key={data.id}
             id={data.id}
             data={this.state.data}
           />
-        )
       }
     })
     return showCart;
   };
-
-  // async componentDidMount() {
-  //   try {
-  //     const response = await fetch("https://api.myjson.com/bins/9d960");
-  //     if (!response.ok) {
-  //       this.setState({ responseError: response.statusText });
-  //       throw Error(response.statusText);
-  //     }
-  //     const json = await response.json();
-  //     console.log(json);
-  //     this.setState({ data: json });
-  //   } catch (error) {
-  //     this.setState({ errorMessage: error });
-  //   }
-  // }
 
   render() {
     const { data } = this.state;
