@@ -11,7 +11,7 @@ export default class Cart extends React.Component {
     const data = this.state.data;
     const displayCartItems = data.map(data => {
       return (
-        <div className="cart-items">
+        <div className="cart-items" key={data.id}>
           <CartItem
             key={data.id}
             id={data.id}

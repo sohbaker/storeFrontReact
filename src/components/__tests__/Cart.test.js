@@ -24,6 +24,6 @@ test("it accepts the prop data", () => {
     shop_quantity: 3
   }]
   const wrapper = mount(<Cart data={data} />);
-  console.log(wrapper.debug());
+  expect(wrapper.prop('data').length).toBe(1);
   expect(wrapper.find("CartItem").length).toBe(1);
 });
