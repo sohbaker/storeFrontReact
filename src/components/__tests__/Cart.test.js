@@ -16,12 +16,12 @@ test("renders without crashing", () => {
 test("it accepts the prop data", () => {
   const data = [{
     cart_quantity: 2,
-    id: 0,
-    name: "Court Shoes, Nude Pink",
-    category: "Women's Footwear",
-    image: "https://i.imgur.com/fmUsxCO.jpg",
-    price: 9900,
-    shop_quantity: 3
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 3400,
+    shop_quantity: 10
   }]
   const wrapper = mount(<Cart data={data} />);
   expect(wrapper.prop('data').length).toBe(1);
@@ -31,21 +31,21 @@ test("it accepts the prop data", () => {
 test("only renders items which have a cart quantitiy more than 0", () => {
   const data = [{
     cart_quantity: 2,
-    id: 0,
-    name: "Court Shoes, Nude Pink",
-    category: "Women's Footwear",
-    image: "https://i.imgur.com/fmUsxCO.jpg",
-    price: 9900,
-    shop_quantity: 3
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 3400,
+    shop_quantity: 10
   },
   {
     cart_quantity: 0,
-    id: 1,
-    name: "Suede Heels, Red",
-    category: "Women's Footwear",
-    image: "https://i.imgur.com/DVnYQl7.jpg",
-    price: 4200,
-    shop_quantity: 4
+    id: 3,
+    name: "Flip Flops, Black",
+    category: "Men's Footwear",
+    image: "https://i.imgur.com/BXHvlyQ.jpg",
+    price: 1900,
+    shop_quantity: 6
   }]
   const wrapper = mount(<Cart data={data} />);
   expect(wrapper.find("CartItem").length).toBe(1);

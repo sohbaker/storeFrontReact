@@ -25,6 +25,8 @@ export default class Cart extends React.Component {
             />
           </div>
         )
+      } else {
+        return null;
       }
     })
     return (<div>{displayCartItems}</div>);

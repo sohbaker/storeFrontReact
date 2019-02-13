@@ -1,5 +1,6 @@
 import React from "react";
 import Item from "./components/Item";
+import Cart from "./components/Cart";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -49,6 +50,23 @@ export default class App extends React.Component {
       this.setState({ data: items });
     }
   };
+
+  showCart = () => {
+    const { data } = this.state;
+    const showCart = data.map(data => {
+      if (data.cart_quantity > 0) {
+        return (
+          <Cart
+            key={data.id}
+            id={data.id}
+            data={this.state.data}
+          />
+        )
+      }
+    })
+    return showCart;
+  };
+
   // async componentDidMount() {
   //   try {
   //     const response = await fetch("https://api.myjson.com/bins/9d960");
@@ -80,6 +98,6 @@ export default class App extends React.Component {
         />
       );
     });
-    return <div>{showProducts}</div>;
+    return (<div><div>{showProducts}</div>  <div>{this.showCart()}</div></div>);
   }
 }
