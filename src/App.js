@@ -51,6 +51,17 @@ export default class App extends React.Component {
     }
   };
 
+  handleMinusClick = id => {
+    let items = [...this.state.data];
+    let item = { ...items[id] };
+    if (item.cart_quantity > 0) {
+      item.shop_quantity += 1;
+      item.cart_quantity -= 1;
+      items[id] = item;
+      this.setState({ data: items });
+    }
+  }
+
   showCart = () => {
     const { data } = this.state;
     let showCart;
@@ -62,6 +73,7 @@ export default class App extends React.Component {
             id={data.id}
             data={this.state.data}
             onIncrement={id => this.handleClick(data.id)}
+            onDecrement={id => this.handleMinusClick(data.id)}
           />
       }
     })

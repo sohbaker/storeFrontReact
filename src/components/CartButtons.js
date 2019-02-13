@@ -1,7 +1,6 @@
 import React from "react";
 
 function disablePositiveButton(props) {
-  console.log(props.shop_quantity)
   if (props.shop_quantity === 0) {
     return "disabled";
   }
@@ -14,7 +13,6 @@ function disableNegativeButton(props) {
 }
 
 const CartButtons = props => {
-  console.log(props)
   return (
     <div>
       <button
