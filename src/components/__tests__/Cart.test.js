@@ -1,25 +1,17 @@
 import React from "react";
-import Enzyme, { shallow } from "enzyme";
+import Enzyme, { shallow, mount } from "enzyme";
 import EnzymeAdapter from "enzyme-adapter-react-16";
 import Cart from "../Cart";
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
-let wrapper;
-// let instance;
-
-beforeEach(() => {
-  wrapper = shallow(<Cart />);
-  // instance = wrapper.instance();
-});
-
 const findByAttribute = (wrapper, val) => {
   return wrapper.find(`[test='${val}']`);
 };
 
-// test("renders without crashing", () => {
-//   shallow(<Cart />);
-// });
+test("renders without crashing", () => {
+  shallow(<Cart data={[]} />);
+});
 
 test("it accepts the prop data", () => {
   const data = [{
@@ -31,14 +23,7 @@ test("it accepts the prop data", () => {
     price: 9900,
     shop_quantity: 3
   }]
-  const wrapper = shallow(<Cart data={data}/>)
+  const wrapper = mount(<Cart data={data} />);
+  console.log(wrapper.debug());
   expect(wrapper.find("CartItem").length).toBe(1);
 });
-
-// test("when rendered it updates this.state.cart with items available in this.state.data", () => {
-//   const wrapper = shallow(<Cart />);
-//   const instance = wrapper.instance();
-//   const dataQuantity = instance.state.data.length;
-//   const cartQuantity = instance.state.cart.length;
-//   expect(cartQuantity).toEqual(dataQuantity);
-// });
