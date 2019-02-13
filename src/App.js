@@ -61,6 +61,7 @@ export default class App extends React.Component {
             key={data.id}
             id={data.id}
             data={this.state.data}
+            onIncrement={id => this.handleClick(data.id)}
           />
       }
     })
