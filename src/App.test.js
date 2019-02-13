@@ -1,5 +1,5 @@
 import React from "react";
-import Enzyme, { shallow } from "enzyme";
+import Enzyme, { shallow, mount } from "enzyme";
 import EnzymeAdapter from "enzyme-adapter-react-16";
 import App from "./App";
 
@@ -12,6 +12,10 @@ beforeEach(() => {
   wrapper = shallow(<App />);
   instance = wrapper.instance();
 });
+
+const findByTestAttr = (wrapper, val) => {
+  return wrapper.find(`[data-test='${val}']`);
+};
 
 test("renders without crashing", () => {
   shallow(<App />);
@@ -33,4 +37,14 @@ test("when rendered it creates a cart_quantity key for existing items in shop da
   const cartQuantity = instance.state.data[1].cart_quantity;
   wrapper.debug();
   expect(cartQuantity).toEqual(0);
+});
+
+test("clicking the add to cart button decreases the shop quantity for item", () => {
+  const wrapper = mount(<App />);
+  const shopQuantity = instance.state.data[1].shop_quantity;
+  const button = findByTestAttr(wrapper, "Add to cart");
+  button.simulate("click");
+  wrapper.update();
+  const quantityDisplay = findByTestAttr(wrapper, "quantity");
+  expect(quantityDisplay.text()).toContain(shopQuantity - 1);
 });
