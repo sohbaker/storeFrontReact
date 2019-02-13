@@ -4,12 +4,12 @@ import CartItem from "./CartItem";
 export default class Cart extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: this.props.data }
+    this.state = {}
   }
 
   getData = () => {
     let dataToShow = [];
-    const data = this.state.data;
+    const data = this.props.data;
     data.forEach(data => {
       if (data.cart_quantity > 0) {
         dataToShow.push({
