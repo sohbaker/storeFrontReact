@@ -6,7 +6,11 @@ export default class Cart extends React.Component {
     super(props);
     this.state = {
       userDiscountCode: null,
-
+      discountCodes: {
+        "5OFF": 500,
+        "10OFF50": 1000,
+        "15OFF75": 1500
+      }
     }
   }
 
@@ -47,11 +51,17 @@ export default class Cart extends React.Component {
 
   handleDiscountChange = (event) => {
     this.setState({ userDiscountCode: event.target.value });
+
   }
 
   handleSubmit = event => {
-    console.log(this.state.userDiscountCode)
     event.preventDefault()
+  }
+
+  isCodeValid = () => {
+    const userCode = this.state.userDiscountCode
+    const discountCodes = this.state.discountCodes
+    return discountCodes.hasOwnProperty(userCode)
   }
 
   render() {
@@ -89,7 +99,7 @@ export default class Cart extends React.Component {
           <form className="ui form" onSubmit={this.handleSubmit}>
             <div className="two wide field">
               <label>Discount code</label>
-              <input type="text" name="discount-code" placeholder="" test="discount-code" value="" onChange={this.handleDiscountChange} required />
+              <input type="text" name="discount-code" placeholder="" test="discount-code" onChange={this.handleDiscountChange} required />
             </div>
             <button className="ui button" type="submit" test="submit">Submit</button>
           </form>
