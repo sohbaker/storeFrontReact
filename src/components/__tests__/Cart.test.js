@@ -110,3 +110,22 @@ test("returns true if user input in discount code field matches existing code", 
   button.simulate('click')
   expect(instance.isCodeValid()).toEqual(true)
 });
+
+test("returns false if user input in discount code field matches existing code", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 3400,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
+  userDiscountCode.simulate('change', { target: { value: 'DISCOUNTPLZ' } })
+  const button = wrapper.find(`[test='${'submit'}']`);
+  button.simulate('click')
+  expect(instance.isCodeValid()).toEqual(false)
+});
