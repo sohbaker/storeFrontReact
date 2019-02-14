@@ -46,3 +46,29 @@ test("only renders items which have a cart quantitiy more than 0", () => {
   const wrapper = mount(<Cart data={data} />);
   expect(wrapper.find("CartItem").length).toBe(1);
 });
+
+test("displays order total for items in the cart", () => {
+  const data = [{
+    cart_quantity: 1,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 3000,
+    shop_quantity: 10
+  },
+  {
+    cart_quantity: 3,
+    id: 3,
+    name: "Flip Flops, Black",
+    category: "Men's Footwear",
+    image: "https://i.imgur.com/BXHvlyQ.jpg",
+    price: 1000,
+    shop_quantity: 6
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  instance.calculateOrderTotal()
+  const orderTotal = wrapper.find(`[test='${'order-total'}']`);
+  expect(orderTotal.text()).toContain("6000");
+});

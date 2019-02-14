@@ -58,3 +58,4 @@ test("resets shop_quantity when remove from cart button is clicked", () => {
   instance.handleRemoveClick(redShoe.id)
   expect(instance.state.data[1].shop_quantity).toEqual(redShoeQuantity);
 });
+

@@ -28,6 +28,20 @@ export default class Cart extends React.Component {
     return dataToShow;
   }
 
+  calculateOrderTotal = () => {
+    const data = this.getData();
+    if (data.length === 0) {
+      return null;
+    }
+    const orderTotal = [];
+    data.forEach(data => {
+      orderTotal.push(
+        data.price * data.cart_quantity
+      )
+    })
+    return orderTotal.reduce((total, price) => total + price);
+  }
+
   render() {
     const data = this.getData();
     let displayCartItems;
@@ -53,6 +67,12 @@ export default class Cart extends React.Component {
         )
       })
     }
-    return (<div>{displayCartItems}</div>);
+    return (
+      <div>
+        <div>{displayCartItems}</div>
+        <div test="order-total">
+          {"Order total: £" + this.calculateOrderTotal()}
+        </div>
+      </div>);
   }
 }
