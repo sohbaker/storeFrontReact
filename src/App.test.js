@@ -49,3 +49,12 @@ test("clicking the add to cart button decreases the shop quantity for item", () 
   const quantityDisplay = findByTestAttr(findFirstItem, "quantity");
   expect(quantityDisplay.text()).toContain(shopQuantity - 1);
 });
+
+test("resets shop_quantity when remove from cart button is clicked", () => {
+  const redShoe = instance.state.data[1];
+  const redShoeQuantity = redShoe.shop_quantity;
+  instance.handleAddClick(redShoe.id);
+  instance.handleAddClick(redShoe.id);
+  instance.handleRemoveClick(redShoe.id)
+  expect(instance.state.data[1].shop_quantity).toEqual(redShoeQuantity);
+});

@@ -62,6 +62,16 @@ export default class App extends React.Component {
     }
   }
 
+  handleRemoveClick = id => {
+    let items = [...this.state.data];
+    let item = { ...items[id] };
+    let resetQuantity = item.shop_quantity + item.cart_quantity;
+    item.shop_quantity = resetQuantity;
+    item.cart_quantity = 0;
+    items[id] = item;
+    this.setState({ data: items });
+  }
+
   showCart = () => {
     const { data } = this.state;
     let showCart;
@@ -74,6 +84,7 @@ export default class App extends React.Component {
             data={this.state.data}
             onIncrement={id => this.handleAddClick(data.id)}
             onDecrement={id => this.handleMinusClick(data.id)}
+            onRemove={id => this.handleRemoveClick(data.id)}
           />
       }
     })

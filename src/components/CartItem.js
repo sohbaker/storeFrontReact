@@ -30,8 +30,10 @@ const CartItem = props => {
               cart_quantity={props.cart_quantity}
               onIncrement={props.onIncrement}
               onDecrement={props.onDecrement}
+              onRemove={props.onRemove}
               positive="+"
               negative="-"
+              remove="Remove from cart"
             />
           </div>
 
