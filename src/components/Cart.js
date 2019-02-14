@@ -10,7 +10,8 @@ export default class Cart extends React.Component {
         "5OFF": 500,
         "10OFF50": 1000,
         "15OFF75": 1500
-      }
+      },
+      validCodeEntry: false,
     }
   }
 
@@ -49,19 +50,30 @@ export default class Cart extends React.Component {
     return orderTotal.reduce((total, price) => total + price);
   }
 
-  handleDiscountChange = (event) => {
-    this.setState({ userDiscountCode: event.target.value });
-
-  }
-
-  handleSubmit = event => {
-    event.preventDefault()
-  }
-
   isCodeValid = () => {
     const userCode = this.state.userDiscountCode
     const discountCodes = this.state.discountCodes
     return discountCodes.hasOwnProperty(userCode)
+  }
+
+  handleDiscountChange = (event) => {
+    this.setState({ userDiscountCode: event.target.value });
+  }
+
+  handleSubmit = event => {
+    alert('A code was submitted ' + this.state.userDiscountCode);
+    event.preventDefault()
+  }
+
+  // handleValidEntry = () => {
+  //   if (this.isCodeValid()) {
+  //     this.setState({ validCodeEntry: true })
+  //   }
+  // }
+
+
+  displayInvalidAlert = () => {
+    return this.isCodeValid() ? "" : "Invalid discount code. Please try again"
   }
 
   render() {
@@ -101,8 +113,10 @@ export default class Cart extends React.Component {
               <label>Discount code</label>
               <input type="text" name="discount-code" placeholder="" test="discount-code" onChange={this.handleDiscountChange} required />
             </div>
+
             <button className="ui button" type="submit" test="submit">Submit</button>
           </form>
+          <div className="ui error message" test="alert">{this.displayInvalidAlert()}</div>
         </div>
       </div>);
   }
