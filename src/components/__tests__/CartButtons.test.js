@@ -32,8 +32,8 @@ test("disables positive button if shop quantity is 0", () => {
   expect(button.hasClass("disabled")).toBeTruthy();
 });
 
-test("disables negative button if cart quantity is 0", () => {
-  const cart_quantity = 0;
+test("disables negative button if cart quantity is 1", () => {
+  const cart_quantity = 1;
   const wrapper = shallow(<CartButtons cart_quantity={cart_quantity} />);
   const button = wrapper.find("[test='negative']");
   expect(button.hasClass("disabled")).toBeTruthy();

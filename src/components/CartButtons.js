@@ -7,7 +7,7 @@ function disablePositiveButton(props) {
 }
 
 function disableNegativeButton(props) {
-  if (props.cart_quantity === 0) {
+  if (props.cart_quantity === 1) {
     return "disabled";
   }
 }

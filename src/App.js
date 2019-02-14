@@ -54,7 +54,7 @@ export default class App extends React.Component {
   handleMinusClick = id => {
     let items = [...this.state.data];
     let item = { ...items[id] };
-    if (item.cart_quantity > 0) {
+    if (item.cart_quantity >= 1) {
       item.shop_quantity += 1;
       item.cart_quantity -= 1;
       items[id] = item;
