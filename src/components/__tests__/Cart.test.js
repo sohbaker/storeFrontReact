@@ -72,3 +72,23 @@ test("displays order total for items in the cart", () => {
   const orderTotal = wrapper.find(`[test='${'order-total'}']`);
   expect(orderTotal.text()).toContain("6000");
 });
+
+test("it updates this.state.discount when the submit button is clicked", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 3400,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  const discountCode = wrapper.find(`[test='${'discount-code'}']`);
+  discountCode.simulate('change', { target: { value: 'Bonjour' } })
+  const button = wrapper.find(`[test='${'submit'}']`);
+  button.simulate('click')
+  console.log(instance.state.discountCode)
+  expect(instance.state.discountCode).not.toBe(null);
+});

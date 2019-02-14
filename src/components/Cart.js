@@ -4,7 +4,10 @@ import CartItem from "./CartItem";
 export default class Cart extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      userDiscountCode: null,
+
+    }
   }
 
   getData = () => {
@@ -42,6 +45,15 @@ export default class Cart extends React.Component {
     return orderTotal.reduce((total, price) => total + price);
   }
 
+  handleDiscountChange = (event) => {
+    this.setState({ userDiscountCode: event.target.value });
+  }
+
+  handleSubmit = event => {
+    console.log(this.state.userDiscountCode)
+    event.preventDefault()
+  }
+
   render() {
     const data = this.getData();
     let displayCartItems;
@@ -72,6 +84,15 @@ export default class Cart extends React.Component {
         <div>{displayCartItems}</div>
         <div test="order-total">
           {"Order total: £" + this.calculateOrderTotal()}
+        </div>
+        <div>
+          <form className="ui form" onSubmit={this.handleSubmit}>
+            <div className="two wide field">
+              <label>Discount code</label>
+              <input type="text" name="discount-code" placeholder="" test="discount-code" value="" onChange={this.handleDiscountChange} required />
+            </div>
+            <button className="ui button" type="submit" test="submit">Submit</button>
+          </form>
         </div>
       </div>);
   }
