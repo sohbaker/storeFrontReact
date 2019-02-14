@@ -1,5 +1,6 @@
 import React from "react";
 import Item from "./components/Item";
+import Cart from "./components/Cart";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -39,7 +40,7 @@ export default class App extends React.Component {
     this.setState({ data: shopItems });
   };
 
-  handleClick = id => {
+  handleAddClick = id => {
     let items = [...this.state.data];
     let item = { ...items[id] };
     if (item.shop_quantity > 0) {
@@ -49,20 +50,35 @@ export default class App extends React.Component {
       this.setState({ data: items });
     }
   };
-  // async componentDidMount() {
-  //   try {
-  //     const response = await fetch("https://api.myjson.com/bins/9d960");
-  //     if (!response.ok) {
-  //       this.setState({ responseError: response.statusText });
-  //       throw Error(response.statusText);
-  //     }
-  //     const json = await response.json();
-  //     console.log(json);
-  //     this.setState({ data: json });
-  //   } catch (error) {
-  //     this.setState({ errorMessage: error });
-  //   }
-  // }
+
+  handleMinusClick = id => {
+    let items = [...this.state.data];
+    let item = { ...items[id] };
+    if (item.cart_quantity > 0) {
+      item.shop_quantity += 1;
+      item.cart_quantity -= 1;
+      items[id] = item;
+      this.setState({ data: items });
+    }
+  }
+
+  showCart = () => {
+    const { data } = this.state;
+    let showCart;
+    data.forEach(data => {
+      if (data.cart_quantity > 0) {
+        showCart =
+          <Cart
+            key={data.id}
+            id={data.id}
+            data={this.state.data}
+            onIncrement={id => this.handleAddClick(data.id)}
+            onDecrement={id => this.handleMinusClick(data.id)}
+          />
+      }
+    })
+    return showCart;
+  };
 
   render() {
     const { data } = this.state;
@@ -76,10 +92,10 @@ export default class App extends React.Component {
           image={data.image}
           category={data.category}
           quantity={data.shop_quantity}
-          onClick={id => this.handleClick(data.id)}
+          onClick={id => this.handleAddClick(data.id)}
         />
       );
     });
-    return <div>{showProducts}</div>;
+    return (<div><div>{showProducts}</div>  <div>{this.showCart()}</div></div>);
   }
 }

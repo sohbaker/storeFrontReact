@@ -32,7 +32,7 @@ test("renders the item price", () => {
 });
 
 test("renders the quantity of item in cart", () => {
-  const wrapper = shallow(<CartItem quantity="2" />);
+  const wrapper = shallow(<CartItem cart_quantity="2" />);
   const quantity = findByAttribute(wrapper, "quantity");
   expect(quantity.text()).toContain("2");
 });
