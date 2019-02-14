@@ -16,18 +16,18 @@ const CartButtons = props => {
   return (
     <div>
       <button
-        className={"positive ui button " + disablePositiveButton(props)}
-        onClick={props.onIncrement}
-        test="positive"
-      >
-        {props.positive}
-      </button>
-      <button
         className={"negative ui button " + disableNegativeButton(props)}
         onClick={props.onDecrement}
         test="negative"
       >
         {props.negative}
+      </button>
+      <button
+        className={"positive ui button " + disablePositiveButton(props)}
+        onClick={props.onIncrement}
+        test="positive"
+      >
+        {props.positive}
       </button>
     </div>
   );
