@@ -76,3 +76,9 @@ test("renders remove from cart button", () => {
   const remove = findByAttribute(wrapper, "remove");
   expect(remove.text()).toContain("Remove from cart");
 });
+
+test("remove from cart button accepts the onRemove prop", () => {
+  const wrapper = shallow(<CartButtons onRemove="Delete" />);
+  const button = wrapper.find("[test='remove']");
+  expect(button.prop("onClick")).toContain("Delete");
+});
