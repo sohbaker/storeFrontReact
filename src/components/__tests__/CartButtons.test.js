@@ -14,15 +14,15 @@ test("renders without crashing", () => {
 });
 
 test("renders add button", () => {
-  const wrapper = shallow(<CartButtons positive="Add" />);
+  const wrapper = shallow(<CartButtons positive="+" />);
   const positive = findByAttribute(wrapper, "positive");
-  expect(positive.text()).toContain("Add");
+  expect(positive.text()).toContain("+");
 });
 
-test("renders remove button", () => {
-  const wrapper = shallow(<CartButtons negative="Remove" />);
+test("renders minus button", () => {
+  const wrapper = shallow(<CartButtons negative="-" />);
   const negative = findByAttribute(wrapper, "negative");
-  expect(negative.text()).toContain("Remove");
+  expect(negative.text()).toContain("-");
 });
 
 test("disables positive button if shop quantity is 0", () => {
@@ -32,8 +32,8 @@ test("disables positive button if shop quantity is 0", () => {
   expect(button.hasClass("disabled")).toBeTruthy();
 });
 
-test("disables negative button if cart quantity is 0", () => {
-  const cart_quantity = 0;
+test("disables negative button if cart quantity is 1", () => {
+  const cart_quantity = 1;
   const wrapper = shallow(<CartButtons cart_quantity={cart_quantity} />);
   const button = wrapper.find("[test='negative']");
   expect(button.hasClass("disabled")).toBeTruthy();
@@ -69,4 +69,16 @@ test("CartButtons accepts onDecrement prop", () => {
   const wrapper = shallow(<CartButtons onDecrement="Goodbye" />);
   const button = wrapper.find("[test='negative']");
   expect(button.prop("onClick")).toContain("Goodbye");
+});
+
+test("renders remove from cart button", () => {
+  const wrapper = shallow(<CartButtons remove="Remove from cart" />);
+  const remove = findByAttribute(wrapper, "remove");
+  expect(remove.text()).toContain("Remove from cart");
+});
+
+test("remove from cart button accepts the onRemove prop", () => {
+  const wrapper = shallow(<CartButtons onRemove="Delete" />);
+  const button = wrapper.find("[test='remove']");
+  expect(button.prop("onClick")).toContain("Delete");
 });

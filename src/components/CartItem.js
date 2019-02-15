@@ -17,9 +17,12 @@ const CartItem = props => {
           <p className="header" test="name">
             {props.name}
           </p>
-          <div className="description">
-            <p test="price">{props.price}</p>
-            <p test="quantity">{props.cart_quantity}</p>
+          <div className="extra">
+            <p test="price">{"Price: £" + props.price}</p>
+            <p test="quantity">{"Quantity: " + props.cart_quantity}</p>
+          </div>
+          <div className="description" test="total">
+            {"Total price: £" + itemTotal(props.price, props.cart_quantity)}
           </div>
           <div>
             <CartButtons
@@ -27,13 +30,13 @@ const CartItem = props => {
               cart_quantity={props.cart_quantity}
               onIncrement={props.onIncrement}
               onDecrement={props.onDecrement}
+              onRemove={props.onRemove}
               positive="+"
               negative="-"
+              remove="Remove from cart"
             />
           </div>
-          <div className="extra" test="total">
-            {itemTotal(props.price, props.cart_quantity)}
-          </div>
+
         </div>
       </div>
     </div>

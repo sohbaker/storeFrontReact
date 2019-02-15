@@ -14,7 +14,7 @@ beforeEach(() => {
 });
 
 const findByTestAttr = (wrapper, val) => {
-  return wrapper.find(`[data-test='${val}']`);
+  return wrapper.find(`[test='${val}']`);
 };
 
 test("renders without crashing", () => {
@@ -41,10 +41,21 @@ test("when rendered it creates a cart_quantity key for existing items in shop da
 
 test("clicking the add to cart button decreases the shop quantity for item", () => {
   const wrapper = mount(<App />);
-  const shopQuantity = instance.state.data[1].shop_quantity;
-  const button = findByTestAttr(wrapper, "Add to cart");
+  const shopQuantity = instance.state.data[0].shop_quantity;
+  const findFirstItem = wrapper.find("Item").first();
+  const button = findByTestAttr(findFirstItem, "Add to cart");
   button.simulate("click");
   wrapper.update();
-  const quantityDisplay = findByTestAttr(wrapper, "quantity");
+  const quantityDisplay = findByTestAttr(findFirstItem, "quantity");
   expect(quantityDisplay.text()).toContain(shopQuantity - 1);
 });
+
+test("resets shop_quantity when remove from cart button is clicked", () => {
+  const redShoe = instance.state.data[1];
+  const redShoeQuantity = redShoe.shop_quantity;
+  instance.handleAddClick(redShoe.id);
+  instance.handleAddClick(redShoe.id);
+  instance.handleRemoveClick(redShoe.id)
+  expect(instance.state.data[1].shop_quantity).toEqual(redShoeQuantity);
+});
+
