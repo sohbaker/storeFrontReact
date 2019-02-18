@@ -13,7 +13,12 @@ export default class Cart extends React.Component {
       },
       validCodeEntry: false,
     };
-    this.discountMessageDiv = React.createRef();
+    this.discountMessage = React.createRef();
+    this.textInput = React.createRef();
+  }
+
+  componentDidUpdate() {
+    this.displayDiscountMessage();
   }
 
   getData = () => {
@@ -58,23 +63,24 @@ export default class Cart extends React.Component {
   }
 
   handleKeyPress = (event) => {
-    this.setState({ userDiscountCode: event.target.value });
     if (event.key === 'Enter') {
-      this.displayDiscountMessage();
+      this.setState({ userDiscountCode: event.target.value });
     }
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    // alert('A code was submitted ' + this.state.userDiscountCode);
-    this.displayDiscountMessage();
+    this.setState({ userDiscountCode: this.textInput.current.value });
   }
 
   displayDiscountMessage = () => {
-    const node = this.discountMessageDiv.current;
+    if (this.state.userDiscountCode === null) {
+      return;
+    }
+    const node = this.discountMessage.current;
     if (this.isCodeValid()) {
       node.setAttribute("class", "ui success message")
-      return node.innerHTML = "well done";
+      return node.innerHTML = "Success! Your code has been applied";
     }
     node.setAttribute("class", "ui error message")
     return node.innerHTML = "Invalid discount code. Please try again";
@@ -115,12 +121,12 @@ export default class Cart extends React.Component {
           <form className="ui form" onSubmit={this.handleSubmit}>
             <div className="two wide field">
               <label>Discount code</label>
-              <input type="text" name="discount-code" placeholder="" test="discount-code" onKeyPress={this.handleKeyPress} required />
+              <input type="text" name="discount-code" placeholder="" test="discount-code" onKeyPress={this.handleKeyPress} ref={this.textInput} required />
             </div>
 
             <button className="ui button" type="submit" test="submit">Submit</button>
           </form>
-          <div className="discount-message" ref={this.discountMessageDiv} test="alert"></div>
+          <div className="discount-message" ref={this.discountMessage} test="alert"></div>
         </div>
       </div>);
   }

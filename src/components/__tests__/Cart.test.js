@@ -73,7 +73,7 @@ test("displays order total for items in the cart", () => {
   expect(orderTotal.text()).toContain("6000");
 });
 
-test("it updates this.state.discount when the submit button is clicked", () => {
+test("it updates this.state.userDiscountCode when the submit button is clicked", () => {
   const data = [{
     cart_quantity: 2,
     id: 2,
@@ -84,11 +84,13 @@ test("it updates this.state.discount when the submit button is clicked", () => {
     shop_quantity: 10
   }]
   const wrapper = mount(<Cart data={data} />);
-  const instance = wrapper.instance()
+  const instance = wrapper.instance();
   const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
-  userDiscountCode.simulate('keyPress', { target: { value: '5OFF' } })
+  userDiscountCode.simulate('keyPress', { target: { value: '5OFF' } });
+  // instance().componentDidUpdate();
   const button = wrapper.find(`[test='${'submit'}']`);
-  button.simulate('click')
+  button.simulate('click');
+  instance.componentDidUpdate();
   expect(instance.state.userDiscountCode).toBe('5OFF');
 });
 
@@ -103,11 +105,14 @@ test("returns true if user input in discount code field matches existing code", 
     shop_quantity: 10
   }]
   const wrapper = mount(<Cart data={data} />);
-  const instance = wrapper.instance()
+  const instance = wrapper.instance();
   const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
   userDiscountCode.simulate('keyPress', { target: { value: '5OFF' } })
   const button = wrapper.find(`[test='${'submit'}']`);
   button.simulate('click')
+  instance.componentDidUpdate();
+  instance.setState();
+  console.log(instance.state.userDiscountCode)
   expect(instance.isCodeValid()).toEqual(true)
 });
 
