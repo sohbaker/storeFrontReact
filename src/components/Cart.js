@@ -103,9 +103,9 @@ export default class Cart extends React.Component {
               price={item.price}
               shop_quantity={item.shop_quantity}
               cart_quantity={item.cart_quantity}
-              onIncrement={this.props.onIncrement}
-              onDecrement={this.props.onDecrement}
-              onRemove={this.props.onRemove}
+              onIncrement={id => this.props.onIncrement(item.id)}
+              onDecrement={id => this.props.onDecrement(item.id)}
+              onRemove={id => this.props.onRemove(item.id)}
             />
           </div>
         )

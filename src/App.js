@@ -79,12 +79,10 @@ export default class App extends React.Component {
       if (data.cart_quantity > 0) {
         showCart =
           <Cart
-            key={data.id}
-            id={data.id}
             data={this.state.data}
-            onIncrement={id => this.handleAddClick(data.id)}
-            onDecrement={id => this.handleMinusClick(data.id)}
-            onRemove={id => this.handleRemoveClick(data.id)}
+            onIncrement={this.handleAddClick}
+            onDecrement={this.handleMinusClick}
+            onRemove={this.handleRemoveClick}
           />
       }
     })
