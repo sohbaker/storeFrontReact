@@ -15,6 +15,7 @@ export default class Cart extends React.Component {
     };
     this.discountMessage = React.createRef();
     this.textInput = React.createRef();
+    this.discountValue = React.createRef();
   }
 
   componentDidUpdate() {
@@ -59,7 +60,13 @@ export default class Cart extends React.Component {
 
   calculateOrderTotal = () => {
     const subtotal = this.calculateSubtotal();
-    return (subtotal - this.getCodeValue()).toFixed(2)
+    const five = this.state.userDiscountCode === '5OFF'
+    const ten = this.state.userDiscountCode === '10OFF50' && subtotal > 50
+    if (five || ten) {
+      this.discountValue.current.innerHTML = "Discount value: £" + this.getCodeValue();
+      return (subtotal - this.getCodeValue()).toFixed(2)
+    }
+    return subtotal
   }
 
   getCodeValue = () => {
@@ -132,8 +139,7 @@ export default class Cart extends React.Component {
         <div test="subtotal">
           {"Subtotal: £" + this.calculateSubtotal()}
         </div>
-        <div test="discount-value">
-          {"Discount value: £" + this.getCodeValue()}
+        <div test="discount-value" ref={this.discountValue}>
         </div>
         <div test="order-total">
           {"Order total: £" + this.calculateOrderTotal()}

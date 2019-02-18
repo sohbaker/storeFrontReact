@@ -204,3 +204,37 @@ test("displays value of discount applied", () => {
   const discountValue = wrapper.find(`[test='${'discount-value'}']`);
   expect(discountValue.text()).toContain("5.00")
 });
+
+test("10OFF50 (£10 discount) is applied, if subtotal is more than £50", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 34.00,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  instance.setState({ userDiscountCode: '10OFF50' })
+  const orderTotal = wrapper.find(`[test='${'order-total'}']`);
+  expect(orderTotal.text()).toContain("58.00")
+});
+
+test("10OFF50 (£10 discount) is applied, if subtotal is less than £50", () => {
+  const data = [{
+    cart_quantity: 1,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 34.00,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  instance.setState({ userDiscountCode: '10OFF50' })
+  const orderTotal = wrapper.find(`[test='${'order-total'}']`);
+  expect(orderTotal.text()).toContain("34.00")
+});
