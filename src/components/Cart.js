@@ -42,7 +42,7 @@ export default class Cart extends React.Component {
     return dataToShow;
   }
 
-  calculateOrderTotal = () => {
+  calculateSubtotal = () => {
     const data = this.getData();
     if (data.length === 0) {
       return null;
@@ -54,6 +54,11 @@ export default class Cart extends React.Component {
       )
     })
     const subtotal = orderTotal.reduce((total, price) => total + price);
+    return subtotal.toFixed(2)
+  }
+
+  calculateOrderTotal = () => {
+    const subtotal = this.calculateSubtotal();
     return (subtotal - this.getCodeValue()).toFixed(2)
   }
 
@@ -123,6 +128,9 @@ export default class Cart extends React.Component {
     return (
       <div>
         <div>{displayCartItems}</div>
+        <div test="subtotal">
+          {"Subtotal: £" + this.calculateSubtotal()}
+        </div>
         <div test="order-total">
           {"Order total: £" + this.calculateOrderTotal()}
         </div>

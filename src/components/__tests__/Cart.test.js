@@ -170,3 +170,20 @@ test("deducts £5 from order total when the 5OFF voucher is used", () => {
   const orderTotal = wrapper.find(`[test='${'order-total'}']`);
   expect(orderTotal.text()).toContain("63.00")
 });
+
+test("displays the subtotal of the order separately from the final order total", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 34.00,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  instance.setState({ userDiscountCode: '5OFF' })
+  const subtotal = wrapper.find(`[test='${'subtotal'}']`);
+  expect(subtotal.text()).toContain("68.00")
+});
