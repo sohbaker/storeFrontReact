@@ -58,4 +58,6 @@ test("resets shop_quantity when remove from cart button is clicked", () => {
   instance.handleRemoveClick(redShoe.id)
   expect(instance.state.data[1].shop_quantity).toEqual(redShoeQuantity);
 });
-
+test("when rendered, it divides each item price by 100 and converts value to a float", () => {
+  expect(instance.state.data[1].price).toEqual("42.00");
+});

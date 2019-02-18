@@ -73,7 +73,50 @@ test("displays order total for items in the cart", () => {
   expect(orderTotal.text()).toContain("6000");
 });
 
-test("it updates this.state.discount when the submit button is clicked", () => {
+test("it updates this.state.userDiscountCode when the submit button is clicked", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 3400,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance();
+  const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
+  userDiscountCode.simulate('keyPress', { target: { value: '5OFF' } });
+  // instance().componentDidUpdate();
+  const button = wrapper.find(`[test='${'submit'}']`);
+  button.simulate('click');
+  instance.componentDidUpdate();
+  expect(instance.state.userDiscountCode).toBe('5OFF');
+});
+
+test("returns true if user input in discount code field matches existing code", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 3400,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance();
+  const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
+  userDiscountCode.simulate('keyPress', { target: { value: '5OFF' } })
+  const button = wrapper.find(`[test='${'submit'}']`);
+  button.simulate('click')
+  instance.componentDidUpdate();
+  instance.setState();
+  console.log(instance.state.userDiscountCode)
+  expect(instance.isCodeValid()).toEqual(true)
+});
+
+test("returns false if user input in discount code field matches existing code", () => {
   const data = [{
     cart_quantity: 2,
     id: 2,
@@ -86,49 +129,11 @@ test("it updates this.state.discount when the submit button is clicked", () => {
   const wrapper = mount(<Cart data={data} />);
   const instance = wrapper.instance()
   const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
-  userDiscountCode.simulate('change', { target: { value: '5OFF' } })
+  userDiscountCode.simulate('keyPress', { target: { value: 'DISCOUNTPLZ' } })
   const button = wrapper.find(`[test='${'submit'}']`);
   button.simulate('click')
-  expect(instance.state.userDiscountCode).toBe('5OFF');
+  expect(instance.isCodeValid()).toEqual(false)
 });
-
-// test("returns true if user input in discount code field matches existing code", () => {
-//   const data = [{
-//     cart_quantity: 2,
-//     id: 2,
-//     name: "Brogues, Tan",
-//     category: "Men's Footwear",
-//     image: "https:////i.imgur.com/4h9KYYa.jpg",
-//     price: 3400,
-//     shop_quantity: 10
-//   }]
-//   const wrapper = mount(<Cart data={data} />);
-//   const instance = wrapper.instance()
-//   const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
-//   userDiscountCode.simulate('change', { target: { value: '5OFF' } })
-//   const button = wrapper.find(`[test='${'submit'}']`);
-//   button.simulate('click')
-//   expect(instance.isCodeValid()).toEqual(true)
-// });
-
-// test("returns false if user input in discount code field matches existing code", () => {
-//   const data = [{
-//     cart_quantity: 2,
-//     id: 2,
-//     name: "Brogues, Tan",
-//     category: "Men's Footwear",
-//     image: "https:////i.imgur.com/4h9KYYa.jpg",
-//     price: 3400,
-//     shop_quantity: 10
-//   }]
-//   const wrapper = mount(<Cart data={data} />);
-//   const instance = wrapper.instance()
-//   const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
-//   userDiscountCode.simulate('change', { target: { value: 'DISCOUNTPLZ' } })
-//   const button = wrapper.find(`[test='${'submit'}']`);
-//   button.simulate('click')
-//   expect(instance.isCodeValid()).toEqual(false)
-// });
 
 test("displays alert if user enters invalid discount code", () => {
   const data = [{
@@ -141,11 +146,95 @@ test("displays alert if user enters invalid discount code", () => {
     shop_quantity: 10
   }]
   const wrapper = mount(<Cart data={data} />);
-  const instance = wrapper.instance()
   const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
-  userDiscountCode.simulate('change', { target: { value: 'DISCOUNTPLZ' } })
+  userDiscountCode.simulate('keyPress', { target: { value: 'DISCOUNTPLZ' } })
   const button = wrapper.find(`[test='${'submit'}']`);
-  button.simulate('click')
+  button.simulate('submit')
   const alert = wrapper.find(`[test='${'alert'}']`);
   expect(alert.text()).toContain("Invalid discount code")
+});
+
+test("deducts £5 from order total when the 5OFF voucher is used", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 34.00,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  instance.setState({ userDiscountCode: '5OFF' })
+  const orderTotal = wrapper.find(`[test='${'order-total'}']`);
+  expect(orderTotal.text()).toContain("63.00")
+});
+
+test("displays the subtotal of the order separately from the final order total", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 34.00,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  instance.setState({ userDiscountCode: '5OFF' })
+  const subtotal = wrapper.find(`[test='${'subtotal'}']`);
+  expect(subtotal.text()).toContain("68.00")
+});
+
+test("displays value of discount applied", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 34.00,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  instance.setState({ userDiscountCode: '5OFF' })
+  const discountValue = wrapper.find(`[test='${'discount-value'}']`);
+  expect(discountValue.text()).toContain("5.00")
+});
+
+test("10OFF50 (£10 discount) is applied, if subtotal is more than £50", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 34.00,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  instance.setState({ userDiscountCode: '10OFF50' })
+  const orderTotal = wrapper.find(`[test='${'order-total'}']`);
+  expect(orderTotal.text()).toContain("58.00")
+});
+
+test("10OFF50 (£10 discount) is applied, if subtotal is less than £50", () => {
+  const data = [{
+    cart_quantity: 1,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 34.00,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  instance.setState({ userDiscountCode: '10OFF50' })
+  const orderTotal = wrapper.find(`[test='${'order-total'}']`);
+  expect(orderTotal.text()).toContain("34.00")
 });

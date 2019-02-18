@@ -7,12 +7,19 @@ export default class Cart extends React.Component {
     this.state = {
       userDiscountCode: null,
       discountCodes: {
-        "5OFF": 500,
-        "10OFF50": 1000,
-        "15OFF75": 1500
+        "5OFF": 5.00,
+        "10OFF50": 10.00,
+        "15OFF75": 15.00
       },
       validCodeEntry: false,
-    }
+    };
+    this.discountMessage = React.createRef();
+    this.textInput = React.createRef();
+    this.discountValue = React.createRef();
+  }
+
+  componentDidUpdate() {
+    this.displayDiscountMessage();
   }
 
   getData = () => {
@@ -36,7 +43,7 @@ export default class Cart extends React.Component {
     return dataToShow;
   }
 
-  calculateOrderTotal = () => {
+  calculateSubtotal = () => {
     const data = this.getData();
     if (data.length === 0) {
       return null;
@@ -47,33 +54,58 @@ export default class Cart extends React.Component {
         data.price * data.cart_quantity
       )
     })
-    return orderTotal.reduce((total, price) => total + price);
+    const subtotal = orderTotal.reduce((total, price) => total + price);
+    return subtotal.toFixed(2)
+  }
+
+  calculateOrderTotal = () => {
+    const subtotal = this.calculateSubtotal();
+    const five = this.state.userDiscountCode === '5OFF'
+    const ten = this.state.userDiscountCode === '10OFF50' && subtotal > 50
+    if (five || ten) {
+      this.discountValue.current.innerHTML = "Discount value: £" + this.getCodeValue();
+      return (subtotal - this.getCodeValue()).toFixed(2)
+    }
+    return subtotal
+  }
+
+  getCodeValue = () => {
+    if (this.isCodeValid()) {
+      const discountCodes = this.state.discountCodes;
+      const discountValue = discountCodes[this.state.userDiscountCode];
+      return discountValue.toFixed(2);
+    }
+    return 0;
   }
 
   isCodeValid = () => {
     const userCode = this.state.userDiscountCode
     const discountCodes = this.state.discountCodes
-    return discountCodes.hasOwnProperty(userCode)
+    return discountCodes.hasOwnProperty(userCode);
   }
 
-  handleDiscountChange = (event) => {
-    this.setState({ userDiscountCode: event.target.value });
+  handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      this.setState({ userDiscountCode: event.target.value });
+    }
   }
 
   handleSubmit = event => {
-    alert('A code was submitted ' + this.state.userDiscountCode);
-    event.preventDefault()
+    event.preventDefault();
+    this.setState({ userDiscountCode: this.textInput.current.value });
   }
 
-  // handleValidEntry = () => {
-  //   if (this.isCodeValid()) {
-  //     this.setState({ validCodeEntry: true })
-  //   }
-  // }
-
-
-  displayInvalidAlert = () => {
-    return this.isCodeValid() ? "" : "Invalid discount code. Please try again"
+  displayDiscountMessage = () => {
+    if (this.state.userDiscountCode === null) {
+      return;
+    }
+    const node = this.discountMessage.current;
+    if (this.isCodeValid()) {
+      node.setAttribute("class", "ui success message")
+      return node.innerHTML = "Success! Your code has been applied";
+    }
+    node.setAttribute("class", "ui error message")
+    return node.innerHTML = "Invalid discount code. Please try again";
   }
 
   render() {
@@ -93,9 +125,9 @@ export default class Cart extends React.Component {
               price={item.price}
               shop_quantity={item.shop_quantity}
               cart_quantity={item.cart_quantity}
-              onIncrement={this.props.onIncrement}
-              onDecrement={this.props.onDecrement}
-              onRemove={this.props.onRemove}
+              onIncrement={id => this.props.onIncrement(item.id)}
+              onDecrement={id => this.props.onDecrement(item.id)}
+              onRemove={id => this.props.onRemove(item.id)}
             />
           </div>
         )
@@ -104,6 +136,11 @@ export default class Cart extends React.Component {
     return (
       <div>
         <div>{displayCartItems}</div>
+        <div test="subtotal">
+          {"Subtotal: £" + this.calculateSubtotal()}
+        </div>
+        <div test="discount-value" ref={this.discountValue}>
+        </div>
         <div test="order-total">
           {"Order total: £" + this.calculateOrderTotal()}
         </div>
@@ -111,12 +148,12 @@ export default class Cart extends React.Component {
           <form className="ui form" onSubmit={this.handleSubmit}>
             <div className="two wide field">
               <label>Discount code</label>
-              <input type="text" name="discount-code" placeholder="" test="discount-code" onChange={this.handleDiscountChange} required />
+              <input type="text" name="discount-code" placeholder="" test="discount-code" onKeyPress={this.handleKeyPress} ref={this.textInput} required />
             </div>
 
             <button className="ui button" type="submit" test="submit">Submit</button>
           </form>
-          <div className="ui error message" test="alert">{this.displayInvalidAlert()}</div>
+          <div className="discount-message" ref={this.discountMessage} test="alert"></div>
         </div>
       </div>);
   }
