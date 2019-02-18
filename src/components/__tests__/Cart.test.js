@@ -146,11 +146,27 @@ test("displays alert if user enters invalid discount code", () => {
     shop_quantity: 10
   }]
   const wrapper = mount(<Cart data={data} />);
-  // const instance = wrapper.instance()
   const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
   userDiscountCode.simulate('keyPress', { target: { value: 'DISCOUNTPLZ' } })
   const button = wrapper.find(`[test='${'submit'}']`);
   button.simulate('submit')
   const alert = wrapper.find(`[test='${'alert'}']`);
   expect(alert.text()).toContain("Invalid discount code")
+});
+
+test("deducts £5 from order total when the 5OFF voucher is used", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 34.00,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  instance.setState({ userDiscountCode: '5OFF' })
+  const orderTotal = wrapper.find(`[test='${'order-total'}']`);
+  expect(orderTotal.text()).toContain("63.00")
 });

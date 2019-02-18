@@ -7,9 +7,9 @@ export default class Cart extends React.Component {
     this.state = {
       userDiscountCode: null,
       discountCodes: {
-        "5OFF": 500,
-        "10OFF50": 1000,
-        "15OFF75": 1500
+        "5OFF": 5.00,
+        "10OFF50": 10.00,
+        "15OFF75": 15.00
       },
       validCodeEntry: false,
     };
@@ -53,7 +53,16 @@ export default class Cart extends React.Component {
         data.price * data.cart_quantity
       )
     })
-    return orderTotal.reduce((total, price) => total + price);
+    const subtotal = orderTotal.reduce((total, price) => total + price);
+    return (subtotal - this.getCodeValue()).toFixed(2)
+  }
+
+  getCodeValue = () => {
+    if (this.isCodeValid()) {
+      const discountCodes = this.state.discountCodes
+      return discountCodes[this.state.userDiscountCode]
+    }
+    return 0;
   }
 
   isCodeValid = () => {
