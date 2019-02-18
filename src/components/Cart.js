@@ -12,7 +12,13 @@ export default class Cart extends React.Component {
         "15OFF75": 1500
       },
       validCodeEntry: false,
-    }
+    };
+    this.discountMessage = React.createRef();
+    this.textInput = React.createRef();
+  }
+
+  componentDidUpdate() {
+    this.displayDiscountMessage();
   }
 
   getData = () => {
@@ -53,27 +59,31 @@ export default class Cart extends React.Component {
   isCodeValid = () => {
     const userCode = this.state.userDiscountCode
     const discountCodes = this.state.discountCodes
-    return discountCodes.hasOwnProperty(userCode)
+    return discountCodes.hasOwnProperty(userCode);
   }
 
-  handleDiscountChange = (event) => {
-    this.setState({ userDiscountCode: event.target.value });
+  handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      this.setState({ userDiscountCode: event.target.value });
+    }
   }
 
   handleSubmit = event => {
-    alert('A code was submitted ' + this.state.userDiscountCode);
-    event.preventDefault()
+    event.preventDefault();
+    this.setState({ userDiscountCode: this.textInput.current.value });
   }
 
-  // handleValidEntry = () => {
-  //   if (this.isCodeValid()) {
-  //     this.setState({ validCodeEntry: true })
-  //   }
-  // }
-
-
-  displayInvalidAlert = () => {
-    return this.isCodeValid() ? "" : "Invalid discount code. Please try again"
+  displayDiscountMessage = () => {
+    if (this.state.userDiscountCode === null) {
+      return;
+    }
+    const node = this.discountMessage.current;
+    if (this.isCodeValid()) {
+      node.setAttribute("class", "ui success message")
+      return node.innerHTML = "Success! Your code has been applied";
+    }
+    node.setAttribute("class", "ui error message")
+    return node.innerHTML = "Invalid discount code. Please try again";
   }
 
   render() {
@@ -111,12 +121,12 @@ export default class Cart extends React.Component {
           <form className="ui form" onSubmit={this.handleSubmit}>
             <div className="two wide field">
               <label>Discount code</label>
-              <input type="text" name="discount-code" placeholder="" test="discount-code" onChange={this.handleDiscountChange} required />
+              <input type="text" name="discount-code" placeholder="" test="discount-code" onKeyPress={this.handleKeyPress} ref={this.textInput} required />
             </div>
 
             <button className="ui button" type="submit" test="submit">Submit</button>
           </form>
-          <div className="ui error message" test="alert">{this.displayInvalidAlert()}</div>
+          <div className="discount-message" ref={this.discountMessage} test="alert"></div>
         </div>
       </div>);
   }
