@@ -30,12 +30,23 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.addCartQuantityKey();
+    this.setItemPrice();
   }
 
   addCartQuantityKey = () => {
     let shopItems = [...this.state.data];
     shopItems.forEach(item => {
       item["cart_quantity"] = 0;
+    });
+    this.setState({ data: shopItems });
+  };
+
+  setItemPrice = () => {
+    let shopItems = [...this.state.data];
+    shopItems.forEach(item => {
+      const currentPrice = item.price
+      const newPrice = currentPrice / 100
+      item["price"] = newPrice.toFixed(2);
     });
     this.setState({ data: shopItems });
   };
