@@ -86,51 +86,13 @@ test("it updates this.state.discount when the submit button is clicked", () => {
   const wrapper = mount(<Cart data={data} />);
   const instance = wrapper.instance()
   const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
-  userDiscountCode.simulate('change', { target: { value: '5OFF' } })
+  userDiscountCode.simulate('keyPress', { target: { value: '5OFF' } })
   const button = wrapper.find(`[test='${'submit'}']`);
   button.simulate('click')
   expect(instance.state.userDiscountCode).toBe('5OFF');
 });
 
-// test("returns true if user input in discount code field matches existing code", () => {
-//   const data = [{
-//     cart_quantity: 2,
-//     id: 2,
-//     name: "Brogues, Tan",
-//     category: "Men's Footwear",
-//     image: "https:////i.imgur.com/4h9KYYa.jpg",
-//     price: 3400,
-//     shop_quantity: 10
-//   }]
-//   const wrapper = mount(<Cart data={data} />);
-//   const instance = wrapper.instance()
-//   const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
-//   userDiscountCode.simulate('change', { target: { value: '5OFF' } })
-//   const button = wrapper.find(`[test='${'submit'}']`);
-//   button.simulate('click')
-//   expect(instance.isCodeValid()).toEqual(true)
-// });
-
-// test("returns false if user input in discount code field matches existing code", () => {
-//   const data = [{
-//     cart_quantity: 2,
-//     id: 2,
-//     name: "Brogues, Tan",
-//     category: "Men's Footwear",
-//     image: "https:////i.imgur.com/4h9KYYa.jpg",
-//     price: 3400,
-//     shop_quantity: 10
-//   }]
-//   const wrapper = mount(<Cart data={data} />);
-//   const instance = wrapper.instance()
-//   const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
-//   userDiscountCode.simulate('change', { target: { value: 'DISCOUNTPLZ' } })
-//   const button = wrapper.find(`[test='${'submit'}']`);
-//   button.simulate('click')
-//   expect(instance.isCodeValid()).toEqual(false)
-// });
-
-test("displays alert if user enters invalid discount code", () => {
+test("returns true if user input in discount code field matches existing code", () => {
   const data = [{
     cart_quantity: 2,
     id: 2,
@@ -143,9 +105,47 @@ test("displays alert if user enters invalid discount code", () => {
   const wrapper = mount(<Cart data={data} />);
   const instance = wrapper.instance()
   const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
-  userDiscountCode.simulate('change', { target: { value: 'DISCOUNTPLZ' } })
+  userDiscountCode.simulate('keyPress', { target: { value: '5OFF' } })
   const button = wrapper.find(`[test='${'submit'}']`);
   button.simulate('click')
+  expect(instance.isCodeValid()).toEqual(true)
+});
+
+test("returns false if user input in discount code field matches existing code", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 3400,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
+  userDiscountCode.simulate('keyPress', { target: { value: 'DISCOUNTPLZ' } })
+  const button = wrapper.find(`[test='${'submit'}']`);
+  button.simulate('click')
+  expect(instance.isCodeValid()).toEqual(false)
+});
+
+test("displays alert if user enters invalid discount code", () => {
+  const data = [{
+    cart_quantity: 2,
+    id: 2,
+    name: "Brogues, Tan",
+    category: "Men's Footwear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 3400,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  // const instance = wrapper.instance()
+  const userDiscountCode = wrapper.find(`[test='${'discount-code'}']`);
+  userDiscountCode.simulate('keyPress', { target: { value: 'DISCOUNTPLZ' } })
+  const button = wrapper.find(`[test='${'submit'}']`);
+  button.simulate('submit')
   const alert = wrapper.find(`[test='${'alert'}']`);
   expect(alert.text()).toContain("Invalid discount code")
 });
