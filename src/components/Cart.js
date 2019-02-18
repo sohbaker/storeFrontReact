@@ -64,8 +64,9 @@ export default class Cart extends React.Component {
 
   getCodeValue = () => {
     if (this.isCodeValid()) {
-      const discountCodes = this.state.discountCodes
-      return discountCodes[this.state.userDiscountCode]
+      const discountCodes = this.state.discountCodes;
+      const discountValue = discountCodes[this.state.userDiscountCode];
+      return discountValue.toFixed(2);
     }
     return 0;
   }
@@ -130,6 +131,9 @@ export default class Cart extends React.Component {
         <div>{displayCartItems}</div>
         <div test="subtotal">
           {"Subtotal: £" + this.calculateSubtotal()}
+        </div>
+        <div test="discount-value">
+          {"Discount value: £" + this.getCodeValue()}
         </div>
         <div test="order-total">
           {"Order total: £" + this.calculateOrderTotal()}
