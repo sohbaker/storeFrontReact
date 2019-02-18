@@ -7,14 +7,15 @@ export default class Cart extends React.Component {
     this.state = {
       userDiscountCode: null,
       discountCodes: {
-        "5OFF": 500,
-        "10OFF50": 1000,
-        "15OFF75": 1500
+        "5OFF": 5.00,
+        "10OFF50": 10.00,
+        "15OFF75": 15.00
       },
       validCodeEntry: false,
     };
     this.discountMessage = React.createRef();
     this.textInput = React.createRef();
+    this.discountValue = React.createRef();
   }
 
   componentDidUpdate() {
@@ -42,7 +43,7 @@ export default class Cart extends React.Component {
     return dataToShow;
   }
 
-  calculateOrderTotal = () => {
+  calculateSubtotal = () => {
     const data = this.getData();
     if (data.length === 0) {
       return null;
@@ -53,7 +54,28 @@ export default class Cart extends React.Component {
         data.price * data.cart_quantity
       )
     })
-    return orderTotal.reduce((total, price) => total + price);
+    const subtotal = orderTotal.reduce((total, price) => total + price);
+    return subtotal.toFixed(2)
+  }
+
+  calculateOrderTotal = () => {
+    const subtotal = this.calculateSubtotal();
+    const five = this.state.userDiscountCode === '5OFF'
+    const ten = this.state.userDiscountCode === '10OFF50' && subtotal > 50
+    if (five || ten) {
+      this.discountValue.current.innerHTML = "Discount value: £" + this.getCodeValue();
+      return (subtotal - this.getCodeValue()).toFixed(2)
+    }
+    return subtotal
+  }
+
+  getCodeValue = () => {
+    if (this.isCodeValid()) {
+      const discountCodes = this.state.discountCodes;
+      const discountValue = discountCodes[this.state.userDiscountCode];
+      return discountValue.toFixed(2);
+    }
+    return 0;
   }
 
   isCodeValid = () => {
@@ -103,9 +125,9 @@ export default class Cart extends React.Component {
               price={item.price}
               shop_quantity={item.shop_quantity}
               cart_quantity={item.cart_quantity}
-              onIncrement={this.props.onIncrement}
-              onDecrement={this.props.onDecrement}
-              onRemove={this.props.onRemove}
+              onIncrement={id => this.props.onIncrement(item.id)}
+              onDecrement={id => this.props.onDecrement(item.id)}
+              onRemove={id => this.props.onRemove(item.id)}
             />
           </div>
         )
@@ -114,6 +136,11 @@ export default class Cart extends React.Component {
     return (
       <div>
         <div>{displayCartItems}</div>
+        <div test="subtotal">
+          {"Subtotal: £" + this.calculateSubtotal()}
+        </div>
+        <div test="discount-value" ref={this.discountValue}>
+        </div>
         <div test="order-total">
           {"Order total: £" + this.calculateOrderTotal()}
         </div>

@@ -30,12 +30,23 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.addCartQuantityKey();
+    this.setItemPrice();
   }
 
   addCartQuantityKey = () => {
     let shopItems = [...this.state.data];
     shopItems.forEach(item => {
       item["cart_quantity"] = 0;
+    });
+    this.setState({ data: shopItems });
+  };
+
+  setItemPrice = () => {
+    let shopItems = [...this.state.data];
+    shopItems.forEach(item => {
+      const currentPrice = item.price
+      const newPrice = currentPrice / 100
+      item["price"] = newPrice.toFixed(2);
     });
     this.setState({ data: shopItems });
   };
@@ -79,12 +90,10 @@ export default class App extends React.Component {
       if (data.cart_quantity > 0) {
         showCart =
           <Cart
-            key={data.id}
-            id={data.id}
             data={this.state.data}
-            onIncrement={id => this.handleAddClick(data.id)}
-            onDecrement={id => this.handleMinusClick(data.id)}
-            onRemove={id => this.handleRemoveClick(data.id)}
+            onIncrement={this.handleAddClick}
+            onDecrement={this.handleMinusClick}
+            onRemove={this.handleRemoveClick}
           />
       }
     })
