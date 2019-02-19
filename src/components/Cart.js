@@ -127,10 +127,20 @@ export default class Cart extends React.Component {
     const node = this.discountMessage.current;
     if (this.areDiscountConditionsMet()) {
       node.setAttribute("class", "ui success message");
-      return (node.innerHTML = "Success! Your code has been applied");
+      const message = React.createElement(
+        "p",
+        { id: "success" },
+        "Success! Your code has been applied"
+      );
+      return message;
     }
     node.setAttribute("class", "ui error message");
-    return (node.innerHTML = "Invalid discount code. Please try again");
+    const message = React.createElement(
+      "p",
+      { id: "error" },
+      "Invalid discount code. Please try again"
+    );
+    return message;
   };
 
   render() {
@@ -189,7 +199,9 @@ export default class Cart extends React.Component {
             className="discount-message"
             ref={this.discountMessage}
             test="alert"
-          />
+          >
+            {this.displayDiscountMessage()}
+          </div>
         </div>
       </div>
     );
