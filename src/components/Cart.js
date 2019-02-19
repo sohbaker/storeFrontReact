@@ -10,8 +10,7 @@ export default class Cart extends React.Component {
         "5OFF": 5.00,
         "10OFF50": 10.00,
         "15OFF75": 15.00
-      },
-      validCodeEntry: false,
+      }
     };
     this.discountMessage = React.createRef();
     this.textInput = React.createRef();

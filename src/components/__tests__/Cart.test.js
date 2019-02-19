@@ -255,3 +255,20 @@ test("15OFF75 (£15 discount) is applied, if subtotal is more than £75 and cart
   const orderTotal = wrapper.find(`[test='${'order-total'}']`);
   expect(orderTotal.text()).toContain("87.00")
 });
+
+test("15OFF75 (£15 discount) is not applied, if subtotal is more than £75 and cart doesn't contain one footwear item", () => {
+  const data = [{
+    cart_quantity: 3,
+    id: 2,
+    name: "Hoodie",
+    category: "Men's CasualWear",
+    image: "https:////i.imgur.com/4h9KYYa.jpg",
+    price: 34.00,
+    shop_quantity: 10
+  }]
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance()
+  instance.setState({ userDiscountCode: '15OFF75' })
+  const orderTotal = wrapper.find(`[test='${'order-total'}']`);
+  expect(orderTotal.text()).toContain("102.00")
+});
