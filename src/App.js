@@ -86,17 +86,17 @@ export default class App extends React.Component {
   showCart = () => {
     const { data } = this.state;
     let showCart;
-    data.forEach(data => {
-      if (data.cart_quantity > 0) {
-        showCart =
-          <Cart
-            data={this.state.data}
-            onIncrement={this.handleAddClick}
-            onDecrement={this.handleMinusClick}
-            onRemove={this.handleRemoveClick}
-          />
-      }
-    })
+
+    const checkCartQuantity = data.some(item => (item.cart_quantity > 0));
+    if (checkCartQuantity) {
+      showCart =
+        <Cart
+          data={this.state.data}
+          onIncrement={this.handleAddClick}
+          onDecrement={this.handleMinusClick}
+          onRemove={this.handleRemoveClick}
+        />
+    }
     return showCart;
   };
 
