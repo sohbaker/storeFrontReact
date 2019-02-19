@@ -33,6 +33,7 @@ export default class Cart extends React.Component {
           image: data.image,
           name: data.name,
           price: data.price,
+          category: data.category,
           shop_quantity: data.shop_quantity,
           cart_quantity: data.cart_quantity
         })
@@ -41,6 +42,20 @@ export default class Cart extends React.Component {
       }
     })
     return dataToShow;
+  }
+
+  doesCartContainFootwear = () => {
+    const data = this.getData()
+    let containsFootwear = false;
+
+    data.forEach(item => {
+      let itemCategory = item.category
+
+      if (itemCategory.includes("Footwear")) {
+        containsFootwear = true
+      }
+    })
+    return containsFootwear;
   }
 
   calculateSubtotal = () => {
@@ -62,7 +77,9 @@ export default class Cart extends React.Component {
     const subtotal = this.calculateSubtotal();
     const five = this.state.userDiscountCode === '5OFF'
     const ten = this.state.userDiscountCode === '10OFF50' && subtotal > 50
-    if (five || ten) {
+    const fifteen = this.state.userDiscountCode === '15OFF75' && subtotal > 75 && this.doesCartContainFootwear();
+
+    if (five || ten || fifteen) {
       this.discountValue.current.innerHTML = "Discount value: £" + this.getCodeValue();
       return (subtotal - this.getCodeValue()).toFixed(2)
     }
