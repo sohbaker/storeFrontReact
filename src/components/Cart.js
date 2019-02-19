@@ -121,7 +121,10 @@ export default class Cart extends React.Component {
   };
 
   displayDiscountMessage = () => {
-    if (this.state.userDiscountCode === null) {
+    if (
+      this.state.userDiscountCode === null ||
+      this.state.userDiscountCode === ""
+    ) {
       return;
     }
     const node = this.discountMessage.current;
