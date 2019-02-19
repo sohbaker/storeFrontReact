@@ -41,14 +41,42 @@ test("it fetches data from JSON file when server returns a successful response",
   );
 });
 
-// test("deducts 1 from item quantity when add to cart button is clicked", async () => {
-//   const wrapper = await mount(<App />);
-//   const itemShopQuantity = instance.state.data[0].shop_quantity;
-//   const item = wrapper.find("Item").first();
-//   instance.handleAddClick(item.id);
+test("deducts 1 from item quantity when add to cart button is clicked", async () => {
+  const mockSuccessResponse = {
+    products: [
+      {
+        id: 0,
+        name: "Court Shoes, Nude Pink",
+        category: "Women's Footwear",
+        image: "https://i.imgur.com/fmUsxCO.jpg",
+        price: 9900,
+        shop_quantity: 5
+      },
+      {
+        id: 1,
+        name: "Platform Heels, White",
+        category: "Women's Footwear",
+        image: "https://i.imgur.com/pTIH42p.jpg",
+        price: 4200,
+        shop_quantity: 4
+      }
+    ]
+  };
+  const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+  const mockFetchPromise = Promise.resolve({
+    json: () => mockJsonPromise
+  });
 
-//   expect(item.text()).toContain(itemShopQuantity - 1);
-// });
+  jest.spyOn(global, "fetch").mockImplementation(() => mockFetchPromise);
+
+  const wrapper = mount(<App />);
+  wrapper.setState({ data: mockSuccessResponse.products });
+  const instance = wrapper.instance();
+  const itemShopQuantity = instance.state.data[0].shop_quantity;
+  const item = wrapper.find("Item").first();
+  instance.handleAddClick(instance.state.data[0].id);
+  expect(item.text()).toContain(itemShopQuantity - 1);
+});
 
 // test("when rendered it creates a cart_quantity key for existing items in shop data", () => {
 //   const cartQuantity = instance.state.data[1].cart_quantity;
