@@ -293,3 +293,41 @@ test("15OFF75 (£15 discount) is not applied, if subtotal is more than £75 and 
   const orderTotal = wrapper.find(`[test='${"order-total"}']`);
   expect(orderTotal.text()).toContain("102.00");
 });
+
+test("discount value is displayed as £0 if code entered is invalid", () => {
+  const data = [
+    {
+      cart_quantity: 3,
+      id: 2,
+      name: "Hoodie",
+      category: "Men's CasualWear",
+      image: "https:////i.imgur.com/4h9KYYa.jpg",
+      price: 34.0,
+      shop_quantity: 10
+    }
+  ];
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance();
+  instance.setState({ userDiscountCode: "DISCOUNTPLZ" });
+  const discountValue = wrapper.find(`[test='${"discount-value"}']`);
+  expect(discountValue.text()).toContain("£0");
+});
+
+test("discount value is displayed if code entered is valid", () => {
+  const data = [
+    {
+      cart_quantity: 3,
+      id: 2,
+      name: "Hoodie",
+      category: "Men's CasualWear",
+      image: "https:////i.imgur.com/4h9KYYa.jpg",
+      price: 34.0,
+      shop_quantity: 10
+    }
+  ];
+  const wrapper = mount(<Cart data={data} />);
+  const instance = wrapper.instance();
+  instance.setState({ userDiscountCode: "5OFF" });
+  const discountValue = wrapper.find(`[test='${"discount-value"}']`);
+  expect(discountValue.text()).toContain("£5.00");
+});

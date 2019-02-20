@@ -91,6 +91,39 @@ test("clicking the add to cart button decreases the shop quantity for item", () 
 //   expect(instance.state.data[1].shop_quantity).toEqual(redShoeQuantity);
 // });
 
-// test("when rendered, it divides each item price by 100 and converts value to a float", () => {
-//   expect(instance.state.data[1].price).toEqual("42.00");
-// });
+test("when rendered, it divides each item price by 100 and converts value to a float", () => {
+  const mockSuccessResponse = {
+    products: [
+      {
+        id: 0,
+        name: "Court Shoes, Nude Pink",
+        category: "Women's Footwear",
+        image: "https://i.imgur.com/fmUsxCO.jpg",
+        price: 9900,
+        shop_quantity: 5
+      },
+      {
+        id: 1,
+        name: "Platform Heels, White",
+        category: "Women's Footwear",
+        image: "https://i.imgur.com/pTIH42p.jpg",
+        price: 4200,
+        shop_quantity: 4
+      }
+    ]
+  };
+  const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+  const mockFetchPromise = Promise.resolve({
+    json: () => mockJsonPromise
+  });
+
+  jest.spyOn(global, "fetch").mockImplementation(() => mockFetchPromise);
+
+  const wrapper = mount(<App />);
+  wrapper.setState({ data: mockSuccessResponse.products });
+  const instance = wrapper.instance();
+  instance.setItemPrice()
+  const findFirstItem = wrapper.find("Item").first();
+  const price = findByTestAttr(findFirstItem, "price");
+  expect(price.text()).toContain("99.00");
+});
