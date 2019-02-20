@@ -1,0 +1,20 @@
+.single-item {
+    margin: 1% !important; 
+    flex: 1 0 15%;
+}
+
+.content {
+    display: flex !important; 
+    flex-direction: column !important; 
+    justify-content: space-between !important; 
+    align-content: space-between !important; 
+}
+
+.header {
+    font-size: 1.7rem !important;
+    font-weight: bold !important;
+}
+
+.description{
+    font-size: 1.7rem !important;
+}

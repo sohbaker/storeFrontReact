@@ -84,15 +84,22 @@ export default class Cart extends React.Component {
     return false;
   };
 
-  calculateOrderTotal = () => {
-    const subtotal = this.calculateSubtotal();
+  displayDiscountInfo = () => {
+    let discountInfo = React.createElement(
+      "p",
+      { id: "discount-info" },
+      "Discount value: £0"
+    );
+
     if (this.areDiscountConditionsMet()) {
-      this.discountValue.current.innerHTML =
-        "Discount value: £" + this.getCodeValue();
-      return (subtotal - this.getCodeValue()).toFixed(2);
+      discountInfo = React.createElement(
+        "p",
+        { id: "discount-info" },
+        "Discount value: £" + this.getCodeValue()
+      );
     }
-    return subtotal;
-  };
+    return discountInfo;
+  }
 
   getCodeValue = () => {
     if (this.isCodeValid()) {
@@ -107,6 +114,16 @@ export default class Cart extends React.Component {
     const userCode = this.state.userDiscountCode;
     const discountCodes = this.state.discountCodes;
     return discountCodes.hasOwnProperty(userCode);
+  };
+
+
+  calculateOrderTotal = () => {
+    const subtotal = this.calculateSubtotal();
+    if (this.areDiscountConditionsMet()) {
+      this.displayDiscountInfo()
+      return (subtotal - this.getCodeValue()).toFixed(2);
+    }
+    return subtotal;
   };
 
   handleKeyPress = event => {
@@ -175,7 +192,7 @@ export default class Cart extends React.Component {
       <div>
         <div>{displayCartItems}</div>
         <div test="subtotal">{"Subtotal: £" + this.calculateSubtotal()}</div>
-        <div test="discount-value" ref={this.discountValue} />
+        <div test="discount-value" ref={this.discountValue}>{this.displayDiscountInfo()}</div>
         <div test="order-total">
           {"Order total: £" + this.calculateOrderTotal()}
         </div>
