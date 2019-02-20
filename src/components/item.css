@@ -6,7 +6,7 @@
     -moz-box-shadow: 7px 7px 5px 0px rgba(207,207,207,0.62) !important;
     box-shadow: 7px 7px 5px 0px rgba(207,207,207,0.62) !important;
     border: solid #e2e2e2 1px !important;
-    flex-grow: 0 !important;
+    /* flex-grow: 0 !important; */
 }
 
 .content {
