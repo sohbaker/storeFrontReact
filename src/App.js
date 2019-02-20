@@ -1,6 +1,7 @@
 import React from "react";
 import Item from "./components/Item";
 import Cart from "./components/Cart";
+import "./app.css";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -118,7 +119,7 @@ export default class App extends React.Component {
     });
     return (
       <div>
-        <div>{showProducts}</div> <div>{this.showCart()}</div>
+        <div className="container">{showProducts}</div> <div>{this.showCart()}</div>
       </div>
     );
   }

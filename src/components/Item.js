@@ -1,11 +1,12 @@
 import React from "react";
 import ItemButton from "./ItemButton";
+import "./item.css";
 
 const Item = props => {
   return (
-    <div className="ui card">
+    <div className="ui card single-item">
       <div className="image">
-        <img test="image" src={props.image} alt={"image of " + props.name} />
+        <img test="image" className="item-image" src={props.image} alt={"image of " + props.name} />
       </div>
       <div className="content">
         <p test="name" className="header">
@@ -15,7 +16,7 @@ const Item = props => {
           {props.category}
         </p>
         <p test="price" className="description">
-          {props.price}
+          £{props.price}
         </p>
         <p test="quantity" className="extra-content">
           {props.quantity + " remaining"}

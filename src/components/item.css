@@ -1,13 +1,13 @@
 .single-item {
     margin: 1% !important; 
     flex: 1 0 15%;
+    justify-content: space-between; 
 }
 
 .content {
     display: flex !important; 
     flex-direction: column !important; 
-    justify-content: space-between !important; 
-    align-content: space-between !important; 
+    justify-content: flex-end !important; 
 }
 
 .header {
@@ -15,6 +15,10 @@
     font-weight: bold !important;
 }
 
-.description{
+.date {
+    font-size: 1.4rem !important;
+}
+
+.description {
     font-size: 1.7rem !important;
 }
