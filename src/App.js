@@ -1,6 +1,7 @@
 import React from "react";
 import Item from "./components/Item";
 import Cart from "./components/Cart";
+import NavBar from "./components/NavBar";
 import "./app.css";
 
 export default class App extends React.Component {
@@ -119,6 +120,7 @@ export default class App extends React.Component {
     });
     return (
       <div>
+        <NavBar />
         <div className="container">{showProducts}</div> <div>{this.showCart()}</div>
       </div>
     );
