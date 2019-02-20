@@ -141,7 +141,7 @@ export default class Cart extends React.Component {
     const message = React.createElement(
       "p",
       { id: "error" },
-      "Invalid discount code. Please try again"
+      "Invalid discount code or conditions not met. Please try again"
     );
     return message;
   };
