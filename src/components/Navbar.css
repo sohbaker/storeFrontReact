@@ -1,29 +1,3 @@
-.nav-container {
-    display: flex !important;
-    /* flex-direction: row; */
-    justify-content: space-between !important;
-}
-
-.nav-cart-icon {
-    justify-self: flex-end !important;
-}
-
-.ui.menu:after, .ui.menu:before {
-    content: none !important;
-}
-
-.nav-cart-button {
-    border: none;
-}
-
-.nav-cart-button:focus {
-    outline: 0;
-}
-
-.nav-cart-button:hover {
-    color: green;
-}
-
 .ui.menu .item:before {
     content: none !important;
 }

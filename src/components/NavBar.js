@@ -7,13 +7,6 @@ const NavBar = props => {
             <div className="header item nav-header">
                 <span className="nav-flag" role="img" aria-label="Grenada">🇬🇩 </span> Nutmeg
             </div>
-            <div className="item nav-cart-icon">
-                <div>
-                    <button className="nav-cart-button">
-                        <i className="shop icon big" test="icon-image" />
-                    </button>
-                </div>
-            </div>
         </div>
 
     );

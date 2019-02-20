@@ -121,7 +121,10 @@ export default class App extends React.Component {
     return (
       <div>
         <NavBar />
-        <div className="container">{showProducts}</div> <div>{this.showCart()}</div>
+        <div className="container">
+          <div className="items-container">{showProducts}</div>
+          <div className="cart-container">{this.showCart()}</div>
+        </div>
       </div>
     );
   }
