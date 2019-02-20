@@ -2,7 +2,7 @@ import React from "react";
 import Item from "./components/Item";
 import Cart from "./components/Cart";
 import NavBar from "./components/NavBar";
-import "./app.css";
+import "./App.css";
 
 export default class App extends React.Component {
   constructor(props) {

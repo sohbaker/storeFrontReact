@@ -6,6 +6,7 @@
     -moz-box-shadow: 7px 7px 5px 0px rgba(207,207,207,0.62) !important;
     box-shadow: 7px 7px 5px 0px rgba(207,207,207,0.62) !important;
     border: solid #e2e2e2 1px !important;
+    flex-grow: 0 !important;
 }
 
 .content {
@@ -38,4 +39,28 @@
 
 .out-of-stock-image {
     filter: opacity(40%) !important;
+}
+
+@media screen and (max-width: 450px) {
+    .single-item {
+      flex: 1 100% !important;
+    }
+  }
+
+@media screen and (min-width: 451px) and (max-width: 700px) {
+    .single-item {
+      flex: 1 calc(50% - 2rem)!important;
+    }
+  }
+
+@media screen and (min-width: 701px) and (max-width: 1000px) {
+    .single-item {
+        flex: 1 calc(33% - 2rem)!important;
+    }
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1415px) {
+    .single-item {
+        flex: 1 calc(25% - 2rem)!important;
+    }
 }
