@@ -19,7 +19,7 @@ const Item = props => {
           £{props.price}
         </p>
         <p test="quantity" className="extra-content">
-          {props.quantity + " remaining"}
+          {props.quantity === 0 ? "Out of stock" : props.quantity + " remaining"}
         </p>
         <ItemButton onClick={props.onClick} quantity={props.quantity} />
       </div>
