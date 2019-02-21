@@ -1,5 +1,9 @@
-.cart-header { 
-    padding-bottom: 1rem;
-    font-size: 2rem;
-    font-weight: bold;
+.cart-header {
+  padding-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.cart-total-text {
+  font-size: 1.5rem;
 }
