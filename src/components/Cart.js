@@ -205,6 +205,7 @@ export default class Cart extends React.Component {
         <div>{displayCartItems}</div>
         <div className="total-for-cart">
           <div className="cart-total-text">
+            <hr />
             <div test="subtotal">
               {"Subtotal: £" + this.calculateSubtotal()}
             </div>
@@ -214,21 +215,20 @@ export default class Cart extends React.Component {
           </div>
           <div>
             <form className="ui form" onSubmit={this.handleSubmit}>
-              <div className="four wide field">
-                <label className="discount-form-header">Discount code</label>
+              <div className="inline field">
                 <div className="inline fields">
                   <div className="field">
                     <input
                       type="text"
                       name="discount-code"
-                      placeholder=""
+                      placeholder="Discount code"
                       test="discount-code"
                       onKeyPress={this.handleKeyPress}
                       ref={this.textInput}
                       required
                     />
                   </div>
-                  <div className="field">
+                  <div className="field button-field">
                     <button className="ui button" type="submit" test="submit">
                       Submit
                     </button>

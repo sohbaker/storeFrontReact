@@ -11,7 +11,6 @@
 .content {
   display: flex !important;
   flex-direction: column !important;
-  /* justify-content: flex-end !important; */
 }
 
 .add-to-cart-button {
