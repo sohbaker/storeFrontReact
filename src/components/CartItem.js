@@ -1,5 +1,6 @@
 import React from "react";
 import CartButtons from "./CartButtons";
+import "./CartItem.css";
 
 function itemTotal(price, cart_quantity) {
   const calculateTotal = price * cart_quantity;
@@ -9,8 +10,8 @@ function itemTotal(price, cart_quantity) {
 const CartItem = props => {
   return (
     <div className="ui items">
-      <div className="item">
-        <div className="image">
+      <div className="item cart-item">
+        <div className="image cart-image">
           <img src={props.image} test="image" alt={"image of " + props.name} />
         </div>
         <div className="content">
@@ -36,7 +37,6 @@ const CartItem = props => {
               remove="Remove from cart"
             />
           </div>
-
         </div>
       </div>
     </div>
