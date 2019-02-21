@@ -4,7 +4,7 @@ import "./CartItem.css";
 
 function itemTotal(price, cart_quantity) {
   const calculateTotal = price * cart_quantity;
-  return calculateTotal;
+  return calculateTotal.toFixed(2);
 }
 
 const CartItem = props => {
@@ -18,11 +18,11 @@ const CartItem = props => {
           <p className="header" test="name">
             {props.name}
           </p>
-          <div className="extra">
+          <div className="extra cart-item-text">
             <p test="price">{"Price: £" + props.price}</p>
             <p test="quantity">{"Quantity: " + props.cart_quantity}</p>
           </div>
-          <div className="description" test="total">
+          <div className="description cart-item-text" test="total">
             {"Total price: £" + itemTotal(props.price, props.cart_quantity)}
           </div>
           <div>

@@ -6,3 +6,12 @@
   width: 25% !important;
   height: auto;
 }
+
+.cart-item-text {
+  font-size: 1.3rem !important;
+  margin: 0 !important;
+}
+
+.extra > p {
+  margin: 0 !important;
+}
