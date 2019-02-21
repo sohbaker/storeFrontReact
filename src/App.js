@@ -2,7 +2,7 @@ import React from "react";
 import Item from "./components/Item";
 import Cart from "./components/Cart";
 import NavBar from "./components/NavBar";
-import "./app.css";
+import "./App.css";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ export default class App extends React.Component {
 
   async makeApiRequest() {
     try {
-      const response = await fetch("https://api.myjson.com/bins/18f2he");
+      const response = await fetch("https://api.myjson.com/bins/zsciy");
       if (!response.ok) {
         this.setState({ responseError: response.statusText });
         throw Error(response.statusText);
@@ -121,7 +121,10 @@ export default class App extends React.Component {
     return (
       <div>
         <NavBar />
-        <div className="container">{showProducts}</div> <div>{this.showCart()}</div>
+        <div className="container">
+          <div className="items-container">{showProducts}</div>
+          <div className="cart-container">{this.showCart()}</div>
+        </div>
       </div>
     );
   }

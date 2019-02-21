@@ -1,5 +1,6 @@
 import React from "react";
 import CartItem from "./CartItem";
+import "./Cart.css";
 
 export default class Cart extends React.Component {
   constructor(props) {
@@ -190,6 +191,9 @@ export default class Cart extends React.Component {
     }
     return (
       <div>
+        <div className="cart-header">
+          <p><span><i className="shop icon small" test="icon-image" /></span>Shopping Cart</p>
+        </div>
         <div>{displayCartItems}</div>
         <div test="subtotal">{"Subtotal: £" + this.calculateSubtotal()}</div>
         <div test="discount-value" ref={this.discountValue}>{this.displayDiscountInfo()}</div>

@@ -37,7 +37,7 @@ test("it fetches data from JSON file when server returns a successful response",
 
   expect(global.fetch).toHaveBeenCalledTimes(1);
   expect(global.fetch).toHaveBeenLastCalledWith(
-    "https://api.myjson.com/bins/18f2he"
+    "https://api.myjson.com/bins/zsciy"
   );
 });
 

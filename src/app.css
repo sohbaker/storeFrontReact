@@ -1,5 +1,22 @@
-.container {
+.items-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    width: 75%;
 }
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.cart-container {
+    width: 22%;
+}
+
+/* @media screen and (min-width: 1001px) and (max-width: 1415px) {
+    .items-container {
+        width: 100%;
+    }
+} */
