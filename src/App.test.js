@@ -37,7 +37,7 @@ test("it fetches data from JSON file when server returns a successful response",
 
   expect(global.fetch).toHaveBeenCalledTimes(1);
   expect(global.fetch).toHaveBeenLastCalledWith(
-    "https://api.myjson.com/bins/18f2he"
+    "https://api.myjson.com/bins/7ss86"
   );
 });
 
@@ -122,7 +122,7 @@ test("when rendered, it divides each item price by 100 and converts value to a f
   const wrapper = mount(<App />);
   wrapper.setState({ data: mockSuccessResponse.products });
   const instance = wrapper.instance();
-  instance.setItemPrice()
+  instance.setItemPrice();
   const findFirstItem = wrapper.find("Item").first();
   const price = findByTestAttr(findFirstItem, "price");
   expect(price.text()).toContain("99.00");

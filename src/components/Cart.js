@@ -1,5 +1,6 @@
 import React from "react";
 import CartItem from "./CartItem";
+import "./Cart.css";
 
 export default class Cart extends React.Component {
   constructor(props) {
@@ -99,7 +100,7 @@ export default class Cart extends React.Component {
       );
     }
     return discountInfo;
-  }
+  };
 
   getCodeValue = () => {
     if (this.isCodeValid()) {
@@ -116,11 +117,10 @@ export default class Cart extends React.Component {
     return discountCodes.hasOwnProperty(userCode);
   };
 
-
   calculateOrderTotal = () => {
     const subtotal = this.calculateSubtotal();
     if (this.areDiscountConditionsMet()) {
-      this.displayDiscountInfo()
+      this.displayDiscountInfo();
       return (subtotal - this.getCodeValue()).toFixed(2);
     }
     return subtotal;
@@ -135,6 +135,10 @@ export default class Cart extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     this.setState({ userDiscountCode: this.textInput.current.value });
+  };
+
+  handleCheckoutClick = event => {
+    alert("Thanks for ordering from Nutmeg! Your items will be with you soon");
   };
 
   displayDiscountMessage = () => {
@@ -190,37 +194,65 @@ export default class Cart extends React.Component {
     }
     return (
       <div>
-        <div>{displayCartItems}</div>
-        <div test="subtotal">{"Subtotal: £" + this.calculateSubtotal()}</div>
-        <div test="discount-value" ref={this.discountValue}>{this.displayDiscountInfo()}</div>
-        <div test="order-total">
-          {"Order total: £" + this.calculateOrderTotal()}
+        <div className="cart-header">
+          <p>
+            <span>
+              <i className="shop icon small" test="icon-image" />
+            </span>
+            Shopping Cart
+          </p>
         </div>
-        <div>
-          <form className="ui form" onSubmit={this.handleSubmit}>
-            <div className="two wide field">
-              <label>Discount code</label>
-              <input
-                type="text"
-                name="discount-code"
-                placeholder=""
-                test="discount-code"
-                onKeyPress={this.handleKeyPress}
-                ref={this.textInput}
-                required
-              />
+        <div>{displayCartItems}</div>
+        <div className="total-for-cart">
+          <div className="cart-total-text">
+            <hr />
+            <div test="subtotal">
+              {"Subtotal: £" + this.calculateSubtotal()}
             </div>
-
-            <button className="ui button" type="submit" test="submit">
-              Submit
+            <div test="discount-value" ref={this.discountValue}>
+              {this.displayDiscountInfo()}
+            </div>
+          </div>
+          <div>
+            <form className="ui form" onSubmit={this.handleSubmit}>
+              <div className="inline field">
+                <div className="inline fields">
+                  <div className="field">
+                    <input
+                      type="text"
+                      name="discount-code"
+                      placeholder="Discount code"
+                      test="discount-code"
+                      onKeyPress={this.handleKeyPress}
+                      ref={this.textInput}
+                      required
+                    />
+                  </div>
+                  <div className="field button-field">
+                    <button className="ui button" type="submit" test="submit">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div
+              className="discount-message"
+              ref={this.discountMessage}
+              test="alert"
+            >
+              {this.displayDiscountMessage()}
+            </div>
+            <div test="order-total" className="order-total">
+              {"Order total: £" + this.calculateOrderTotal()}
+            </div>
+            <button
+              className="ui yellow right floated button checkout-button"
+              type="button"
+              onClick={this.handleCheckoutClick}
+            >
+              PROCEED TO CHECKOUT
             </button>
-          </form>
-          <div
-            className="discount-message"
-            ref={this.discountMessage}
-            test="alert"
-          >
-            {this.displayDiscountMessage()}
           </div>
         </div>
       </div>
