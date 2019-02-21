@@ -241,9 +241,15 @@ export default class Cart extends React.Component {
             >
               {this.displayDiscountMessage()}
             </div>
-            <div test="order-total">
+            <div test="order-total" className="order-total">
               {"Order total: £" + this.calculateOrderTotal()}
             </div>
+            <button
+              className="ui yellow right floated button checkout-button"
+              type="button"
+            >
+              PROCEED TO CHECKOUT
+            </button>
           </div>
         </div>
       </div>
