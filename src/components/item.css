@@ -1,5 +1,6 @@
 .single-item {
   margin: 10px !important;
+  max-height: 600px;
   flex: 1 0 15%;
   justify-content: space-between;
   -webkit-box-shadow: 7px 7px 5px 0px rgba(207, 207, 207, 0.62) !important;
@@ -11,7 +12,6 @@
 .content {
   display: flex !important;
   flex-direction: column !important;
-  /* justify-content: flex-end !important; */
 }
 
 .add-to-cart-button {
