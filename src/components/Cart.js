@@ -89,7 +89,7 @@ export default class Cart extends React.Component {
     let discountInfo = React.createElement(
       "p",
       { id: "discount-info" },
-      "Discount value: £0"
+      "Discount value: £0.00"
     );
 
     if (this.areDiscountConditionsMet()) {
