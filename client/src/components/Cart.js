@@ -137,9 +137,9 @@ export default class Cart extends React.Component {
     this.setState({ userDiscountCode: this.textInput.current.value });
   };
 
-  handleCheckoutClick = event => {
-    alert("Thanks for ordering from Nutmeg! Your items will be with you soon");
-  };
+  // handleCheckoutClick = event => {
+  //   alert("Thanks for ordering from Nutmeg! Your items will be with you soon");
+  // };
 
   displayDiscountMessage = () => {
     if (
@@ -249,7 +249,7 @@ export default class Cart extends React.Component {
             <button
               className="ui yellow right floated button checkout-button"
               type="button"
-              onClick={this.handleCheckoutClick}
+              onClick={this.props.onCheckout}
             >
               PROCEED TO CHECKOUT
             </button>

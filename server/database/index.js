@@ -14,7 +14,7 @@ const getTime = (request, response) => {
         if (error) {
             return console.log(error);
         }
-        console.log('PostgreSQL connected...')
+        console.log(`PostgreSQL connected at ${results.rows[0].now}`)
     })
 }
 

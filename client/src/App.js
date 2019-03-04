@@ -16,7 +16,7 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     await this.retrieveProducts();
-    this.addCartQuantityKey();
+    this.setCartQuantityZero();
     this.setItemPrice();
   }
 
@@ -34,7 +34,7 @@ export default class App extends React.Component {
     }
   }
 
-  addCartQuantityKey = () => {
+  setCartQuantityZero = () => {
     let items = [...this.state.data];
     items.forEach(item => {
       item["cart_quantity"] = 0;
@@ -58,6 +58,7 @@ export default class App extends React.Component {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          id: id,
           shop_quantity: shop_quantity,
         })
       });
@@ -78,7 +79,6 @@ export default class App extends React.Component {
       item.shop_quantity -= 1;
       item.cart_quantity += 1;
       items[id] = item;
-      this.updateProduct(id, item.shop_quantity)
       this.setState({ data: items });
     }
   };
@@ -90,7 +90,6 @@ export default class App extends React.Component {
       item.shop_quantity += 1;
       item.cart_quantity -= 1;
       items[id] = item;
-      this.updateProduct(id, item.shop_quantity)
       this.setState({ data: items });
     }
   };
@@ -102,9 +101,23 @@ export default class App extends React.Component {
     item.shop_quantity = resetQuantity;
     item.cart_quantity = 0;
     items[id] = item;
-    this.updateProduct(id, item.shop_quantity)
     this.setState({ data: items });
   };
+
+  handleCheckoutClick = () => {
+    let items = [...this.state.data];
+    items.forEach(item => {
+      if (item.cart_quantity > 0) {
+        const id = item.id
+        const newShopQuantity = item.shop_quantity
+        console.log(newShopQuantity)
+        this.updateProduct(id, newShopQuantity)
+        console.log("checkout click method")
+      }
+    })
+    this.setCartQuantityZero();
+    alert('Thank you for ordering from Nutmeg')
+  }
 
   showCart = () => {
     const { data } = this.state;
@@ -118,6 +131,7 @@ export default class App extends React.Component {
           onIncrement={this.handleAddClick}
           onDecrement={this.handleMinusClick}
           onRemove={this.handleRemoveClick}
+          onCheckout={this.handleCheckoutClick}
         />
       );
     }

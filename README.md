@@ -19,7 +19,7 @@ The user can:
 
 ### Backend
 - The product data (id, name, category, image, price, shop_quantity) is stored in a database (PostgreSQL)
-- If the user adds to or removes an item from the cart, the shop_quantity for the item is updated
+- When the user clicks "proceed to checkout" button in the cart, the stock on the server should be decremented
 - **To do:** a user can log in
 - **To do:** the items a user puts into their basket updates the available stock (the number other users see)
 - **To do:** if the user abandon's their basket, the stock numbers are restored
