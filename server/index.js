@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser')
+const db = require('./database');
 
 const ENV = process.env.NODE_ENV;
 const PORT = process.env.PORT || 5000;
@@ -16,8 +17,11 @@ app.use(bodyParser.json());
 
 //make express responsive to requests
 
+app.get('/api/products', db.getProducts)
+
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}...`)
+    db.getTime()
 })
 
 module.exports = app;
