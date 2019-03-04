@@ -80,7 +80,6 @@ export default class App extends React.Component {
       items[id] = item;
       this.updateProduct(id, item.shop_quantity)
       this.setState({ data: items });
-      console.log("added to cart")
     }
   };
 
@@ -91,6 +90,7 @@ export default class App extends React.Component {
       item.shop_quantity += 1;
       item.cart_quantity -= 1;
       items[id] = item;
+      this.updateProduct(id, item.shop_quantity)
       this.setState({ data: items });
     }
   };
@@ -102,6 +102,7 @@ export default class App extends React.Component {
     item.shop_quantity = resetQuantity;
     item.cart_quantity = 0;
     items[id] = item;
+    this.updateProduct(id, item.shop_quantity)
     this.setState({ data: items });
   };
 
