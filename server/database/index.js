@@ -29,13 +29,7 @@ const getProducts = (request, response) => {
 
 const updateProduct = (request, response) => {
     const id = parseInt(request.params.id)
-    let updatedShopQuantity = 0
-    const { shop_quantity, action } = request.body
-    if (action === 'increment') {
-        updatedShopQuantity = parseInt(shop_quantity) + 1
-    } else if (action === 'decrement') {
-        updatedShopQuantity = parseInt(shop_quantity) - 1;
-    }
+    const updatedShopQuantity = request.body.shop_quantity
 
     pool.query('UPDATE products SET shop_quantity = $1 WHERE id = $2', [updatedShopQuantity, id],
         (error, results) => {

@@ -15,12 +15,12 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
-    await this.makeApiRequest();
+    await this.retrieveProducts();
     this.addCartQuantityKey();
     this.setItemPrice();
   }
 
-  async makeApiRequest() {
+  async retrieveProducts() {
     try {
       const response = await fetch("/api/products");
       if (!response.ok) {
@@ -35,31 +35,52 @@ export default class App extends React.Component {
   }
 
   addCartQuantityKey = () => {
-    let shopItems = [...this.state.data];
-    shopItems.forEach(item => {
+    let items = [...this.state.data];
+    items.forEach(item => {
       item["cart_quantity"] = 0;
     });
-    this.setState({ data: shopItems });
+    this.setState({ data: items });
   };
 
   setItemPrice = () => {
-    let shopItems = [...this.state.data];
-    shopItems.forEach(item => {
+    let items = [...this.state.data];
+    items.forEach(item => {
       const currentPrice = item.price;
       const newPrice = currentPrice / 100;
       item["price"] = newPrice.toFixed(2);
     });
-    this.setState({ data: shopItems });
+    this.setState({ data: items });
   };
 
-  handleAddClick = id => {
+  async updateProduct(id, shop_quantity) {
+    try {
+      const response = await fetch(`/api/products/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          shop_quantity: shop_quantity,
+        })
+      });
+      if (!response.ok) {
+        this.setState({ responseError: response.statusText });
+        throw Error(response.statusText);
+      }
+      return await response.json();
+    } catch (error) {
+      this.setState({ errorMessage: error });
+    }
+  }
+
+  handleAddClick = (id) => {
     let items = [...this.state.data];
     let item = { ...items[id] };
     if (item.shop_quantity > 0) {
       item.shop_quantity -= 1;
       item.cart_quantity += 1;
       items[id] = item;
+      this.updateProduct(id, item.shop_quantity)
       this.setState({ data: items });
+      console.log("added to cart")
     }
   };
 
