@@ -10,21 +10,40 @@ const pool = new Pool({
 })
 
 const getTime = (request, response) => {
-    pool.query('SELECT NOW()', (err, results) => {
-        if (err) {
-            return console.log(err);
+    pool.query('SELECT NOW()', (error, results) => {
+        if (error) {
+            return console.log(error);
         }
         console.log('PostgreSQL connected...')
     })
 }
 
 const getProducts = (request, response) => {
-    pool.query('SELECT * FROM products ORDER BY id ASC', (err, results) => {
-        if (err) {
+    pool.query('SELECT * FROM products ORDER BY id ASC', (error, results) => {
+        if (error) {
             return "Error"
         }
         response.status(200).json(results.rows)
     })
 }
 
-module.exports = { getTime, getProducts }
+const updateProduct = (request, response) => {
+    const id = parseInt(request.params.id)
+    let updatedShopQuantity = 0
+    const { shop_quantity, action } = request.body
+    if (action === 'increment') {
+        updatedShopQuantity = parseInt(shop_quantity) + 1
+    } else if (action === 'decrement') {
+        updatedShopQuantity = parseInt(shop_quantity) - 1;
+    }
+
+    pool.query('UPDATE products SET shop_quantity = $1 WHERE id = $2', [updatedShopQuantity, id],
+        (error, results) => {
+            if (error) {
+                return "Error"
+            }
+            response.status(200).send(`Product with ID: ${id} modified with shop_quantity of ${updatedShopQuantity}`)
+        })
+}
+
+module.exports = { getTime, getProducts, updateProduct }

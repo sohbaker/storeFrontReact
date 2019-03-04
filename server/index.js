@@ -19,6 +19,8 @@ app.use(bodyParser.json());
 
 app.get('/api/products', db.getProducts)
 
+app.put('/api/products/:id', db.updateProduct)
+
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}...`)
     db.getTime()
